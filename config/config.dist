@@ -1,0 +1,16 @@
+# This config is imported in a bash script via source.
+
+# Path to folder including all l10n clones
+l10n_clones_path="/path/to/l10n-clones/"
+
+# Path to gecko-strings-quarantine clone
+# https://hg.mozilla.org/users/axel_mozilla.com/gecko-strings-quarantine
+quarantine_path="/path/to/quarantine-repo/"
+
+# Path to folder including a clone of python-fluent
+# https://github.com/projectfluent/python-fluent
+python_fluent_path="/path/to/python-fluent"
+
+# Path to folder including a clone of compare-locales
+# https://hg.mozilla.org/l10n/compare-locales/
+compare_locales_path="/path/to/compare-locales/"
