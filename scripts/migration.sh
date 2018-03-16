@@ -132,7 +132,8 @@ do
     fi
 
     # Run migration
-    python ${python_fluent_path}/tools/migrate/migrate-l10n.py \
+    # -B is to avoid creating .pyc files for migrations
+    python -B ${python_fluent_path}/tools/migrate/migrate-l10n.py \
         --lang ${locale} \
         --reference-dir ${quarantine_path} \
         --localization-dir ${l10n_clones_path}/${locale} \
