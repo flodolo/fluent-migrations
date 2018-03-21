@@ -27,7 +27,7 @@ def migrate(ctx):
             FTL.Message(
                 id=FTL.Identifier('containers-header'),
                 value=COPY(
-                    'browser/chrome/browser/preferences/containers.dtd',
+                    'browser/chrome/browser/preferences/preferences.dtd',
                     'paneContainers.title',
                 )
             ),
