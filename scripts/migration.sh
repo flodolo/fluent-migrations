@@ -22,7 +22,7 @@ fi
 source "${root_path}/config/config"
 
 # Add libraries to $PYTHONPATH
-export PYTHONPATH="${python_fluent_path}:${compare_locales_path}:${PYTHONPATH}:${root_path}/migrations/"
+export PYTHONPATH="${python_fluent_path}:${compare_locales_path}:${PYTHONPATH}:${root_path}/recipes/"
 
 function echo_manual() {
     echo "Run 'migration.sh' without parameters to make a dry-run on all locales."
@@ -93,13 +93,13 @@ then
     exit
 fi
 
-# Create the list of available migrations.
-cd "${root_path}/migrations/"
-migrations=(bug*.py)
-migrations_list=""
-for module in ${migrations[@]}
+# Create the list of available migration recipes.
+cd "${root_path}/recipes/"
+recipes=(bug*.py)
+recipes_list=""
+for recipe in ${recipes[@]}
 do
-    migrations_list="${migrations_list} ${module%.py}"
+    recipes_list="${recipes_list} ${recipe%.py}"
 done
 echo
 
@@ -132,12 +132,12 @@ do
     fi
 
     # Run migration
-    # -B is to avoid creating .pyc files for migrations
+    # -B is to avoid creating .pyc files for each migration recipe
     python -B ${python_fluent_path}/tools/migrate/migrate-l10n.py \
         --lang ${locale} \
         --reference-dir ${quarantine_path} \
         --localization-dir ${l10n_clones_path}/${locale} \
-        ${dry} ${migrations_list}
+        ${dry} ${recipes_list}
 
     # Push to hg server
     if [ "${push_repository}" = true ]
