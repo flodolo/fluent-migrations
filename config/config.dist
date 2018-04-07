@@ -9,8 +9,4 @@ quarantine_path="/path/to/quarantine-repo/"
 
 # Path to folder including a clone of python-fluent
 # https://github.com/projectfluent/python-fluent
-python_fluent_path="/path/to/python-fluent"
-
-# Path to folder including a clone of compare-locales
-# https://hg.mozilla.org/l10n/compare-locales/
-compare_locales_path="/path/to/compare-locales/"
+fluent_migration_path="/path/to/python-fluent"

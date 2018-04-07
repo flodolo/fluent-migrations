@@ -13,10 +13,7 @@ $ source venv/bin/activate
 $ pip install mercurial python-hglib
 ```
 
-2. Clone both [python-fluent](https://github.com/projectfluent/python-fluent)
-and [compare-locales](https://hg.mozilla.org/l10n/compare-locales/) on your
-system. Install both libraries running `pip install -e .` from the root of each
-repository.
+2. Clone [fluent-migration](https://hg.mozilla.org/l10n/fluent-migration) on your system and install it by running `pip install -e .` from the root of the repository.
 
 3. Clone [gecko-strings-quarantine](https://hg.mozilla.org/users/axel_mozilla.com/gecko-strings-quarantine).
 

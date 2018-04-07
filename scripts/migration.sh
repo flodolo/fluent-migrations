@@ -21,8 +21,8 @@ then
 fi
 source "${root_path}/config/config"
 
-# Add libraries to $PYTHONPATH
-export PYTHONPATH="${python_fluent_path}:${compare_locales_path}:${PYTHONPATH}:${root_path}/recipes/"
+# Add recipes to $PYTHONPATH
+export PYTHONPATH="${PYTHONPATH}:${root_path}/recipes/"
 
 function echo_manual() {
     echo "Run 'migration.sh' without parameters to make a dry-run on all locales."
@@ -133,7 +133,8 @@ do
 
     # Run migration
     # -B is to avoid creating .pyc files for each migration recipe
-    python -B ${python_fluent_path}/tools/migrate/migrate-l10n.py \
+    echo ${fluent_migration_path}
+    python -B ${fluent_migration_path}/tools/migrate/migrate-l10n.py \
         --lang ${locale} \
         --reference-dir ${quarantine_path} \
         --localization-dir ${l10n_clones_path}/${locale} \
