@@ -27,7 +27,7 @@ def migrate(ctx):
                                 FTL.Placeable(
                                     expression=FTL.SelectExpression(
                                         expression=FTL.CallExpression(
-                                            callee=FTL.Identifier('PLATFORM')
+                                            callee=FTL.Function('PLATFORM')
                                         ),
                                         variants=[
                                             FTL.Variant(
