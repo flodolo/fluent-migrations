@@ -46,25 +46,6 @@ def migrate(ctx):
                 ),
             ),
             FTL.Message(
-                id=FTL.Identifier('forms-remember-logins'),
-                attributes=[
-                    FTL.Attribute(
-                        FTL.Identifier('label'),
-                        COPY(
-                            'browser/chrome/browser/preferences/security.dtd',
-                            'rememberLogins2.label',
-                        ),
-                    ),
-                    FTL.Attribute(
-                        FTL.Identifier('accesskey'),
-                        COPY(
-                            'browser/chrome/browser/preferences/security.dtd',
-                            'rememberLogins2.accesskey',
-                        ),
-                    ),
-                ],
-            ),
-            FTL.Message(
                 id=FTL.Identifier('forms-exceptions'),
                 attributes=[
                     FTL.Attribute(
@@ -544,21 +525,6 @@ def migrate(ctx):
                 value=COPY(
                     'browser/chrome/browser/preferences/privacy.dtd',
                     'trackingProtectionHeader2.label',
-                ),
-            ),
-            FTL.Message(
-                id=FTL.Identifier('tracking-description'),
-                value=CONCAT(
-                    COPY(
-                        'browser/chrome/browser/preferences/privacy.dtd',
-                        'trackingProtection3.description',
-                    ),
-                    FTL.TextElement(' <a>'),
-                    COPY(
-                        'browser/chrome/browser/preferences/privacy.dtd',
-                        'trackingProtectionLearnMore2.label',
-                    ),
-                    FTL.TextElement('</a>'),
                 ),
             ),
             FTL.Message(
