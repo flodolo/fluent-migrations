@@ -248,41 +248,6 @@ def migrate(ctx):
                 ],
             ),
             FTL.Message(
-                id=FTL.Identifier('containers-remove-alert-title'),
-                value=COPY(
-                    'browser/chrome/browser/preferences/preferences.properties',
-                    'removeContainerAlertTitle',
-                ),
-            ),
-            FTL.Message(
-                id=FTL.Identifier('containers-remove-alert-msg'),
-                value=PLURALS(
-                    'browser/chrome/browser/preferences/preferences.properties',
-                    'removeContainerMsg',
-                    EXTERNAL_ARGUMENT('count'),
-                    lambda text: REPLACE_IN_TEXT(
-                        text,
-                        {
-                            '#S': EXTERNAL_ARGUMENT('count')
-                        }
-                    )
-                )
-            ),
-            FTL.Message(
-                id=FTL.Identifier('containers-remove-ok-button'),
-                value=COPY(
-                    'browser/chrome/browser/preferences/preferences.properties',
-                    'removeContainerOkButton',
-                ),
-            ),
-            FTL.Message(
-                id=FTL.Identifier('containers-remove-cancel-button'),
-                value=COPY(
-                    'browser/chrome/browser/preferences/preferences.properties',
-                    'removeContainerButton2',
-                ),
-            ),
-            FTL.Message(
                 id=FTL.Identifier('containers-color-blue'),
                 attributes=[
                     FTL.Attribute(
