@@ -133,8 +133,7 @@ do
 
     # Run migration
     # -B is to avoid creating .pyc files for each migration recipe
-    echo ${fluent_migration_path}
-    python -B ${fluent_migration_path}/tools/migrate/migrate-l10n.py \
+    python -B ${fluent_migration_path}/fluent/migrate/tool.py \
         --lang ${locale} \
         --reference-dir ${quarantine_path} \
         --localization-dir ${l10n_clones_path}/${locale} \
