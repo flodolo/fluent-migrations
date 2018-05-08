@@ -5,7 +5,8 @@
 
 from __future__ import absolute_import
 import fluent.syntax.ast as FTL
-from fluent.migrate import COPY, CONCAT
+from fluent.migrate.helpers import MESSAGE_REFERENCE
+from fluent.migrate import COPY, CONCAT, REPLACE
 
 
 def migrate(ctx):
