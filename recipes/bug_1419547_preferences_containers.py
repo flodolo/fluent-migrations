@@ -7,7 +7,6 @@ from __future__ import absolute_import
 import fluent.syntax.ast as FTL
 from fluent.migrate.helpers import MESSAGE_REFERENCE, EXTERNAL_ARGUMENT
 from fluent.migrate import COPY, CONCAT, REPLACE
-from fluent.migrate.transforms import PLURALS, REPLACE_IN_TEXT
 
 
 def migrate(ctx):
