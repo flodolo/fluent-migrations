@@ -126,6 +126,8 @@ site-data-removing-dialog =
     .buttonlabelaccept = { COPY("browser/chrome/browser/preferences/preferences.properties", "acceptRemove") }
 
 """) + [
+            # This replacement might not always work, since locales can either
+            # remove the space, or use a non-breaking space for "%1$S %2$S"
             FTL.Message(
                 id=FTL.Identifier('site-usage-persistent'),
                 value=REPLACE(
