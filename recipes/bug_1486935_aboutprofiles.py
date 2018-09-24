@@ -7,7 +7,7 @@ from fluent.migrate import COPY
 
 
 def migrate(ctx):
-    """ Bug 1486935 - Migrate about:Profiles strings to FTL, part {index}. """
+    """ Bug 1486935 - Migrate about:profiles to Fluent, part {index}. """
 
     ctx.add_transforms(
         "toolkit/toolkit/about/aboutProfiles.ftl",
