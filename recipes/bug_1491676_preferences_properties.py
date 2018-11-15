@@ -79,7 +79,7 @@ choose-download-folder-title = { COPY(from_path, "chooseDownloadFolderTitle")}
                                         ),
                                         variants=[
                                             FTL.Variant(
-                                                key=FTL.VariantName("windows"),
+                                                key=FTL.Identifier("windows"),
                                                 default=False,
                                                 value=COPY(
                                                     "browser/chrome/browser/preferences/preferences.properties",
@@ -87,7 +87,7 @@ choose-download-folder-title = { COPY(from_path, "chooseDownloadFolderTitle")}
                                                 )
                                             ),
                                             FTL.Variant(
-                                                key=FTL.VariantName("other"),
+                                                key=FTL.Identifier("other"),
                                                 default=True,
                                                 value=COPY(
                                                     "browser/chrome/browser/preferences/preferences.properties",
@@ -111,7 +111,7 @@ choose-download-folder-title = { COPY(from_path, "chooseDownloadFolderTitle")}
                                         ),
                                         variants=[
                                             FTL.Variant(
-                                                key=FTL.VariantName("windows"),
+                                                key=FTL.Identifier("windows"),
                                                 default=False,
                                                 value=COPY(
                                                     "browser/chrome/browser/preferences/preferences.properties",
@@ -119,7 +119,7 @@ choose-download-folder-title = { COPY(from_path, "chooseDownloadFolderTitle")}
                                                 )
                                             ),
                                             FTL.Variant(
-                                                key=FTL.VariantName("other"),
+                                                key=FTL.Identifier("other"),
                                                 default=True,
                                                 value=COPY(
                                                     "browser/chrome/browser/preferences/preferences.properties",
@@ -145,7 +145,7 @@ choose-download-folder-title = { COPY(from_path, "chooseDownloadFolderTitle")}
                                 ),
                                 variants=[
                                     FTL.Variant(
-                                        key=FTL.VariantName("windows"),
+                                        key=FTL.Identifier("windows"),
                                         default=False,
                                         value=REPLACE(
                                             "browser/chrome/browser/preferences/preferences.properties",
@@ -158,7 +158,7 @@ choose-download-folder-title = { COPY(from_path, "chooseDownloadFolderTitle")}
                                         )
                                     ),
                                     FTL.Variant(
-                                        key=FTL.VariantName("other"),
+                                        key=FTL.Identifier("other"),
                                         default=True,
                                         value=REPLACE(
                                             "browser/chrome/browser/preferences/preferences.properties",
