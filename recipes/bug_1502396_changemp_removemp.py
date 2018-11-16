@@ -6,7 +6,9 @@
 from __future__ import absolute_import
 import fluent.syntax.ast as FTL
 from fluent.migrate.helpers import transforms_from
+from fluent.migrate.helpers import TERM_REFERENCE
 from fluent.migrate import COPY
+from fluent.migrate import REPLACE
 
 
 def migrate(ctx):
@@ -24,9 +26,20 @@ set-password-new-password = { COPY(from_path, "setPassword.newPassword.label") }
 set-password-reenter-password = { COPY(from_path, "setPassword.reenterPassword.label") }
 set-password-meter = { COPY(from_path, "setPassword.meter.label") }
 set-password-meter-loading = { COPY(from_path, "setPassword.meter.loading") }
-master-password-description = { COPY(from_path, "masterPasswordDescription.label") }
 master-password-warning = { COPY(from_path, "masterPasswordWarning.label") }
-""", from_path="toolkit/chrome/mozapps/preferences/changemp.dtd"))
+""", from_path="toolkit/chrome/mozapps/preferences/changemp.dtd") + [
+        FTL.Message(
+            id=FTL.Identifier("master-password-description"),
+            value=REPLACE(
+                "toolkit/chrome/mozapps/preferences/changemp.dtd",
+                "masterPasswordDescription.label",
+                {
+                    "&brandShortName;": TERM_REFERENCE("-brand-short-name")
+                },
+                trim=True
+            )
+        ),
+    ])
 
     ctx.add_transforms(
         "toolkit/toolkit/preferences/preferences.ftl",
