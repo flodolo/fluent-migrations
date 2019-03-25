@@ -9,6 +9,7 @@ from fluent.migrate.helpers import transforms_from
 from fluent.migrate.helpers import MESSAGE_REFERENCE, TERM_REFERENCE
 from fluent.migrate import COPY, CONCAT, REPLACE
 
+
 def migrate(ctx):
     """Bug 1517528 - Migrate aboutPrivateBrowsing from DTD to Fluent, part {index}"""
 
@@ -16,7 +17,7 @@ def migrate(ctx):
         'browser/browser/aboutPrivateBrowsing.ftl',
         'browser/browser/aboutPrivateBrowsing.ftl',
         transforms_from(
-"""
+            """
 about-private-browsing-info-visited = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.info.visited") }
 about-private-browsing-search-placeholder = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.search.placeholder") }
 about-private-browsing-info-bookmarks = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.info.bookmarks") }
@@ -59,7 +60,8 @@ tracking-protection-start-tour = { COPY("browser/chrome/browser/aboutPrivateBrow
             ),
 
             FTL.Message(
-                id=FTL.Identifier('privatebrowsingpage-open-private-window-label'),
+                id=FTL.Identifier(
+                    'privatebrowsingpage-open-private-window-label'),
                 value=COPY(
                     'browser/chrome/browser/aboutPrivateBrowsing.dtd',
                     'privatebrowsingpage.openPrivateWindow.label',
@@ -85,14 +87,20 @@ tracking-protection-start-tour = { COPY("browser/chrome/browser/aboutPrivateBrow
                         }
                     ),
                     FTL.TextElement('<strong>'),
-                    COPY(
+                    REPLACE(
                         'browser/chrome/browser/aboutPrivateBrowsing.dtd',
-                        'aboutPrivateBrowsing.info.notsaved.emphasize'
+                        'aboutPrivateBrowsing.info.notsaved.emphasize',
+                        {
+                            "Firefox": TERM_REFERENCE("brand-short-name")
+                        }
                     ),
                     FTL.TextElement('</strong>'),
-                    COPY(
+                    REPLACE(
                         'browser/chrome/browser/aboutPrivateBrowsing.dtd',
-                        'aboutPrivateBrowsing.info.notsaved.after'
+                        'aboutPrivateBrowsing.info.notsaved.after',
+                        {
+                            "Firefox": TERM_REFERENCE("brand-short-name")
+                        }
                     )
                 )
             ),
@@ -108,14 +116,20 @@ tracking-protection-start-tour = { COPY("browser/chrome/browser/aboutPrivateBrow
                         }
                     ),
                     FTL.TextElement('<strong>'),
-                    COPY(
+                    REPLACE(
                         'browser/chrome/browser/aboutPrivateBrowsing.dtd',
-                        'aboutPrivateBrowsing.info.saved.emphasize'
+                        'aboutPrivateBrowsing.info.saved.emphasize',
+                        {
+                            "Firefox": TERM_REFERENCE("brand-short-name")
+                        }
                     ),
                     FTL.TextElement('</strong>'),
-                    COPY(
+                    REPLACE(
                         'browser/chrome/browser/aboutPrivateBrowsing.dtd',
-                        'aboutPrivateBrowsing.info.saved.after2'
+                        'aboutPrivateBrowsing.info.saved.after2',
+                        {
+                            "Firefox": TERM_REFERENCE("brand-short-name")
+                        }
                     )
                 )
             ),
