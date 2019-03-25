@@ -11,27 +11,27 @@ from fluent.migrate import COPY, CONCAT, REPLACE
 
 def migrate(ctx):
     """Bug 1517528 - Migrate aboutPrivateBrowsing from DTD to Fluent, part {index}"""
-    
+
     ctx.add_transforms(
         'browser/browser/aboutPrivateBrowsing.ftl',
         'browser/browser/aboutPrivateBrowsing.ftl',
         transforms_from(
 """
 about-private-browsing-info-visited = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.info.visited") }
-about-private-browsing-search-placeholder = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.search.placeholder") }   
-about-private-browsing-info-bookmarks = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.info.bookmarks") }      
-about-private-browsing-info-title = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.info.title") }  
-about-private-browsing-info-downloads = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.info.downloads") } 
-about-private-browsing-info-searches = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.info.searches") } 
-private-browsing-title = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "privateBrowsing.title") } 
-about-private-browsing-not-private = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.notPrivate") } 
-content-blocking-title = { COPY("browser/chrome/browser/browser.dtd", "contentBlocking.title") }   
-about-private-browsing-info-myths = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.info.myths") } 
-about-private-browsing-info-clipboard = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.info.clipboard") } 
-about-private-browsing-info-temporary-files = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.info.temporaryFiles") } 
-about-private-browsing-info-cookies = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.info.cookies") } 
-tracking-protection-start-tour = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "trackingProtection.startTour1") } 
-"""        
+about-private-browsing-search-placeholder = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.search.placeholder") }
+about-private-browsing-info-bookmarks = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.info.bookmarks") }
+about-private-browsing-info-title = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.info.title") }
+about-private-browsing-info-downloads = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.info.downloads") }
+about-private-browsing-info-searches = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.info.searches") }
+private-browsing-title = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "privateBrowsing.title") }
+about-private-browsing-not-private = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.notPrivate") }
+content-blocking-title = { COPY("browser/chrome/browser/browser.dtd", "contentBlocking.title") }
+about-private-browsing-info-myths = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.info.myths") }
+about-private-browsing-info-clipboard = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.info.clipboard") }
+about-private-browsing-info-temporary-files = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.info.temporaryFiles") }
+about-private-browsing-info-cookies = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "aboutPrivateBrowsing.info.cookies") }
+tracking-protection-start-tour = { COPY("browser/chrome/browser/aboutPrivateBrowsing.dtd", "trackingProtection.startTour1") }
+"""
         )
     ),
     ctx.add_transforms(
