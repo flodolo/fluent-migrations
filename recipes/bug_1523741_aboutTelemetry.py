@@ -18,42 +18,42 @@ def migrate(ctx):
         "toolkit/toolkit/about/aboutTelemetry.ftl",
         "toolkit/toolkit/about/aboutTelemetry.ftl",
         transforms_from(
-		
+
 """
-about-telemetry-ping-data-source = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.pingDataSource") }
-about-telemetry-show-current-ping-data = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.showCurrentPingData") }
-about-telemetry-show-archived-ping-data = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.showArchivedPingData") }
-about-telemetry-show-subsession-data = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.showSubsessionData") }
-about-telemetry-choose-ping = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.choosePing") }
-about-telemetry-archive-ping-type = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.archivePingType") }
-about-telemetry-archive-ping-header = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.archivePingHeader") }
-about-telemetry-option-group-today = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.optionGroupToday") }
-about-telemetry-option-group-yesterday = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.optionGroupYesterday") }
-about-telemetry-option-group-older = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.optionGroupOlder") }
-about-telemetry-previous-ping = { COPY("toolkit/chrome/global/aboutTelemetry.dtd", "aboutTelemetry.previousPing") }
-about-telemetry-next-ping = { COPY("toolkit/chrome/global/aboutTelemetry.dtd", "aboutTelemetry.nextPing") }
-about-telemetry-page-title = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.pageTitle") }
-about-telemetry-more-information = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.moreInformations") }
-about-telemetry-show-in-Firefox-json-viewer = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.showInFirefoxJsonViewer") }
-about-telemetry-home-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.homeSection") }
-about-telemetry-general-data-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.generalDataSection") }
-about-telemetry-environment-data-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.environmentDataSection") }
-about-telemetry-session-info-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.sessionInfoSection") }
-about-telemetry-scalar-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.scalarsSection") }
-about-telemetry-keyed-scalar-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.keyedScalarsSection") }
-about-telemetry-histograms-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.histogramsSection") }
-about-telemetry-keyed-histogram-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.keyedHistogramsSection") }
-about-telemetry-events-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.eventsSection") }
-about-telemetry-simple-measurements-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.simpleMeasurementsSection") }
-about-telemetry-slow-sql-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.slowSqlSection") }
-about-telemetry-addon-details-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.addonDetailsSection") }
-about-telemetry-captured-stacks-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.capturedStacksSection") }
-about-telemetry-late-writes-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.lateWritesSection") }
-about-telemetry-raw-payload-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.rawPayloadSection") }
-about-telemetry-raw = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.raw") }
-about-telemetry-full-sql-warning = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.fullSqlWarning") }
-about-telemetry-fetch-stack-symbols = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.fetchStackSymbols") }
-about-telemetry-hide-stack-symbols = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.hideStackSymbols") }
+about-telemetry-ping-data-source = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.pingDataSource", trim:"True") }
+about-telemetry-show-current-ping-data = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.showCurrentPingData", trim:"True") }
+about-telemetry-show-archived-ping-data = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.showArchivedPingData", trim:"True") }
+about-telemetry-show-subsession-data = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.showSubsessionData", trim:"True") }
+about-telemetry-choose-ping = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.choosePing", trim:"True") }
+about-telemetry-archive-ping-type = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.archivePingType", trim:"True") }
+about-telemetry-archive-ping-header = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.archivePingHeader", trim:"True") }
+about-telemetry-option-group-today = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.optionGroupToday", trim:"True") }
+about-telemetry-option-group-yesterday = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.optionGroupYesterday", trim:"True") }
+about-telemetry-option-group-older = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.optionGroupOlder", trim:"True") }
+about-telemetry-previous-ping = { COPY("toolkit/chrome/global/aboutTelemetry.dtd", "aboutTelemetry.previousPing", trim:"True") }
+about-telemetry-next-ping = { COPY("toolkit/chrome/global/aboutTelemetry.dtd", "aboutTelemetry.nextPing", trim:"True") }
+about-telemetry-page-title = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.pageTitle", trim:"True") }
+about-telemetry-more-information = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.moreInformations", trim:"True") }
+about-telemetry-show-in-Firefox-json-viewer = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.showInFirefoxJsonViewer", trim:"True") }
+about-telemetry-home-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.homeSection", trim:"True") }
+about-telemetry-general-data-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.generalDataSection", trim:"True") }
+about-telemetry-environment-data-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.environmentDataSection", trim:"True") }
+about-telemetry-session-info-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.sessionInfoSection", trim:"True") }
+about-telemetry-scalar-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.scalarsSection", trim:"True") }
+about-telemetry-keyed-scalar-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.keyedScalarsSection", trim:"True") }
+about-telemetry-histograms-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.histogramsSection", trim:"True") }
+about-telemetry-keyed-histogram-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.keyedHistogramsSection", trim:"True") }
+about-telemetry-events-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.eventsSection", trim:"True") }
+about-telemetry-simple-measurements-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.simpleMeasurementsSection", trim:"True") }
+about-telemetry-slow-sql-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.slowSqlSection", trim:"True") }
+about-telemetry-addon-details-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.addonDetailsSection", trim:"True") }
+about-telemetry-captured-stacks-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.capturedStacksSection", trim:"True") }
+about-telemetry-late-writes-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.lateWritesSection", trim:"True") }
+about-telemetry-raw-payload-section = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.rawPayloadSection", trim:"True") }
+about-telemetry-raw = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.raw", trim:"True") }
+about-telemetry-full-sql-warning = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.fullSqlWarning", trim:"True") }
+about-telemetry-fetch-stack-symbols = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.fetchStackSymbols", trim:"True") }
+about-telemetry-hide-stack-symbols = { COPY("toolkit/chrome/global/aboutTelemetry.dtd","aboutTelemetry.hideStackSymbols", trim:"True") }
 about-telemetry-data-type =
     { $channel ->
         [release] { COPY("toolkit/chrome/global/aboutTelemetry.properties","releaseData") }
@@ -102,6 +102,7 @@ about-telemetry-extra-header = { COPY("toolkit/chrome/global/aboutTelemetry.prop
                     {
                         "<a>": FTL.TextElement('<a data-l10n-name="data-doc-link">'),
                     },
+                    trim=True
                 )
             ),
 			FTL.Message(
@@ -112,6 +113,7 @@ about-telemetry-extra-header = { COPY("toolkit/chrome/global/aboutTelemetry.prop
                     {
                         "<a>": FTL.TextElement('<a data-l10n-name="client-doc-link">'),
                     },
+                    trim=True
                 )
             ),
 			FTL.Message(
@@ -122,6 +124,7 @@ about-telemetry-extra-header = { COPY("toolkit/chrome/global/aboutTelemetry.prop
                     {
                         "<a>": FTL.TextElement('<a data-l10n-name="dashboard-link">'),
                     },
+                    trim=True
                 )
             ),
 			FTL.Message(
@@ -132,6 +135,7 @@ about-telemetry-extra-header = { COPY("toolkit/chrome/global/aboutTelemetry.prop
                     {
                         "<a>": FTL.TextElement('<a data-l10n-name="probe-dictionary-link">'),
                     },
+                    trim=True
                 )
             ),
             FTL.Message(
