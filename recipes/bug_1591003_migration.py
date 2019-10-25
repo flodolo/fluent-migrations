@@ -18,25 +18,25 @@ def migrate(ctx):
             """
 
 urlbar-geolocation-blocked =
-    .tooltiptext = { COPY(path1, "urlbar.geolocationBlocked.tooltip") }
+    .tooltiptext = { COPY(path1, "urlbar.geolocationBlocked.tooltip", trim: "True") }
 urlbar-web-notifications-blocked =
-    .tooltiptext = { COPY(path1, "urlbar.webNotificationsBlocked.tooltip") }
+    .tooltiptext = { COPY(path1, "urlbar.webNotificationsBlocked.tooltip", trim: "True") }
 urlbar-camera-blocked =
-    .tooltiptext = { COPY(path1, "urlbar.cameraBlocked.tooltip") }
+    .tooltiptext = { COPY(path1, "urlbar.cameraBlocked.tooltip", trim: "True") }
 urlbar-microphone-blocked =
-    .tooltiptext = { COPY(path1, "urlbar.microphoneBlocked.tooltip") }
+    .tooltiptext = { COPY(path1, "urlbar.microphoneBlocked.tooltip", trim: "True") }
 urlbar-screen-blocked =
-    .tooltiptext = { COPY(path1, "urlbar.screenBlocked.tooltip") }
+    .tooltiptext = { COPY(path1, "urlbar.screenBlocked.tooltip", trim: "True") }
 urlbar-persistent-storage-blocked =
-    .tooltiptext = { COPY(path1, "urlbar.persistentStorageBlocked.tooltip") }
+    .tooltiptext = { COPY(path1, "urlbar.persistentStorageBlocked.tooltip", trim: "True") }
 urlbar-popup-blocked =
-    .tooltiptext = { COPY(path1, "urlbar.popupBlocked.tooltip") }
+    .tooltiptext = { COPY(path1, "urlbar.popupBlocked.tooltip", trim: "True") }
 urlbar-autoplay-media-blocked =
-    .tooltiptext = { COPY(path1, "urlbar.autoplayMediaBlocked.tooltip") }
+    .tooltiptext = { COPY(path1, "urlbar.autoplayMediaBlocked.tooltip", trim: "True") }
 urlbar-canvas-blocked =
-    .tooltiptext = { COPY(path1, "urlbar.canvasBlocked.tooltip") }
+    .tooltiptext = { COPY(path1, "urlbar.canvasBlocked.tooltip", trim: "True") }
 urlbar-midi-blocked =
-    .tooltiptext = { COPY(path1, "urlbar.midiBlocked.tooltip") }
+    .tooltiptext = { COPY(path1, "urlbar.midiBlocked.tooltip", trim: "True") }
 urlbar-install-blocked =
-    .tooltiptext = { COPY(path1, "urlbar.installBlocked.tooltip") }
-""", path1="/browser/chrome/browser/browser.dtd"))
+    .tooltiptext = { COPY(path1, "urlbar.installBlocked.tooltip", trim: "True") }
+""", path1="browser/chrome/browser/browser.dtd"))
