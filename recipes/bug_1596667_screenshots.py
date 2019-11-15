@@ -54,7 +54,6 @@ screenshots-tour-next-button-tooltip = { COPY(from_path, "tourNext", trim: "True
 screenshots-tour-previous-button-tooltip = { COPY(from_path, "tourPrevious", trim: "True") }
 screenshots-tour-done-button-tooltip = { COPY(from_path, "tourDone", trim: "True") }
 
-# This was hard-coded in the original version
 screenshots-meta-key = {
   PLATFORM() ->
     [macos] ⌘
