@@ -13,9 +13,13 @@ from fluent.migrate.helpers import MESSAGE_REFERENCE, TERM_REFERENCE
 def migrate(ctx, locale):
     """Bug 1596667 - Migrate Screenshots add-on to Fluent, part {index}"""
 
+    TARGET_FILE = "locales/{}/screenshots.ftl".format(locale)
+    SOURCE_FILE = "locales/en-US/screenshots.ftl"
+    TRANSLATION_SOURCE = "locales/{}/webextension.properties".format(locale)
+
     ctx.add_transforms(
-        "locales/{}/screenshots.ftl".format(locale),
-        "locales/en-US/screenshots.ftl",
+        TARGET_FILE,
+        SOURCE_FILE,
         transforms_from(
             """
 screenshots-context-menu = { COPY(from_path, "contextMenuLabel", trim: "True") }
@@ -55,16 +59,16 @@ screenshots-meta-key = {
     [macos] ⌘
    *[other] Ctrl
 }
-""", from_path="locales/{}/webextension.properties".format(locale)))
+""", from_path=TRANSLATION_SOURCE))
 
     ctx.add_transforms(
-        "locales/{}/screenshots.ftl".format(locale),
-        "locales/en-US/screenshots.ftl",
+        TARGET_FILE,
+        SOURCE_FILE,
         [
             FTL.Message(
                 id=FTL.Identifier("screenshots-notification-link-copied-details"),
                 value=REPLACE(
-                    "locales/{}/webextension.properties".format(locale),
+                    TRANSLATION_SOURCE,
                     "notificationLinkCopiedDetails",
                     {
                         "{meta_key}": MESSAGE_REFERENCE("screenshots-meta-key")
@@ -75,7 +79,7 @@ screenshots-meta-key = {
             FTL.Message(
                 id=FTL.Identifier("screenshots-notification-image-copied-details"),
                 value=REPLACE(
-                    "locales/{}/webextension.properties".format(locale),
+                    TRANSLATION_SOURCE,
                     "notificationImageCopiedDetails",
                     {
                         "{meta_key}": MESSAGE_REFERENCE("screenshots-meta-key")
@@ -86,7 +90,7 @@ screenshots-meta-key = {
             FTL.Message(
                 id=FTL.Identifier("screenshots-login-error-details"),
                 value=REPLACE(
-                    "locales/{}/webextension.properties".format(locale),
+                    TRANSLATION_SOURCE,
                     "loginErrorDetails",
                     {
                         "Firefox Screenshots": TERM_REFERENCE("screenshots-brand-name")
@@ -97,7 +101,7 @@ screenshots-meta-key = {
             FTL.Message(
                 id=FTL.Identifier("screenshots-self-screenshot-error-title"),
                 value=REPLACE(
-                    "locales/{}/webextension.properties".format(locale),
+                    TRANSLATION_SOURCE,
                     "selfScreenshotErrorTitle",
                     {
                         "Firefox Screenshots": TERM_REFERENCE("screenshots-brand-name")
@@ -108,7 +112,7 @@ screenshots-meta-key = {
             FTL.Message(
                 id=FTL.Identifier("screenshots-private-window-error-title"),
                 value=REPLACE(
-                    "locales/{}/webextension.properties".format(locale),
+                    TRANSLATION_SOURCE,
                     "privateWindowErrorTitle",
                     {
                         "Screenshots": TERM_REFERENCE("screenshots-brand-name")
@@ -119,7 +123,7 @@ screenshots-meta-key = {
             FTL.Message(
                 id=FTL.Identifier("screenshots-generic-error-title"),
                 value=REPLACE(
-                    "locales/{}/webextension.properties".format(locale),
+                    TRANSLATION_SOURCE,
                     "genericErrorTitle",
                     {
                         "Firefox Screenshots": TERM_REFERENCE("screenshots-brand-name")
@@ -130,7 +134,7 @@ screenshots-meta-key = {
             FTL.Message(
                 id=FTL.Identifier("screenshots-connection-error-details"),
                 value=REPLACE(
-                    "locales/{}/webextension.properties".format(locale),
+                    TRANSLATION_SOURCE,
                     "connectionErrorDetails",
                     {
                         "Firefox Screenshots": TERM_REFERENCE("screenshots-brand-name")
@@ -141,7 +145,7 @@ screenshots-meta-key = {
             FTL.Message(
                 id=FTL.Identifier("screenshots-tour-body-intro"),
                 value=REPLACE(
-                    "locales/{}/webextension.properties".format(locale),
+                    TRANSLATION_SOURCE,
                     "tourBodyIntroServerless",
                     {
                         "Firefox": TERM_REFERENCE("brand-product-name")
@@ -152,14 +156,14 @@ screenshots-meta-key = {
             FTL.Message(
                 id=FTL.Identifier("screenshots-terms-and-privacy-notice"),
                 value=REPLACE(
-                    "locales/{}/webextension.properties".format(locale),
+                    TRANSLATION_SOURCE,
                     "termsAndPrivacyNotice2",
                     {
                         "Firefox Screenshots": TERM_REFERENCE("screenshots-brand-name"),
                         "{termsAndPrivacyNoticeTermsLink}": CONCAT(
                             FTL.TextElement('<a data-l10n-name="terms-link">'),
                             COPY(
-                                "webextension.properties",
+                                TRANSLATION_SOURCE,
                                 "termsAndPrivacyNoticeTermsLink"
                             ),
                             FTL.TextElement("</a>")
@@ -167,7 +171,7 @@ screenshots-meta-key = {
                         "{termsAndPrivacyNoticePrivacyLink}": CONCAT(
                             FTL.TextElement('<a data-l10n-name="privacy-link">'),
                             COPY(
-                                "webextension.properties",
+                                TRANSLATION_SOURCE,
                                 "termsAndPrivacyNoticyPrivacyLink"
                             ),
                             FTL.TextElement("</a>")
