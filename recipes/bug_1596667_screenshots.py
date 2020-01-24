@@ -43,16 +43,6 @@ screenshots-unshootable-page-error-details = { COPY(from_path, "unshootablePageE
 screenshots-empty-selection-error-title = { COPY(from_path, "emptySelectionErrorTitle", trim: "True") }
 screenshots-private-window-error-details = { COPY(from_path, "privateWindowErrorDetails", trim: "True") }
 screenshots-generic-error-details = { COPY(from_path, "genericErrorDetails", trim: "True") }
-screenshots-tour-header-page-action = { COPY(from_path, "tourHeaderPageAction", trim: "True") }
-screenshots-tour-body-page-action = { COPY(from_path, "tourBodyPageAction", trim: "True") }
-screenshots-tour-header-click-and-drag = { COPY(from_path, "tourHeaderClickAndDrag", trim: "True") }
-screenshots-tour-body-click-and-drag = { COPY(from_path, "tourBodyClickAndDrag", trim: "True") }
-screenshots-tour-header-full-page = { COPY(from_path, "tourHeaderFullPage", trim: "True") }
-screenshots-tour-body-full-page = { COPY(from_path, "tourBodyFullPage", trim: "True") }
-screenshots-tour-skip-button = { COPY(from_path, "tourSkip", trim: "True") }
-screenshots-tour-next-button-tooltip = { COPY(from_path, "tourNext", trim: "True") }
-screenshots-tour-previous-button-tooltip = { COPY(from_path, "tourPrevious", trim: "True") }
-screenshots-tour-done-button-tooltip = { COPY(from_path, "tourDone", trim: "True") }
 
 screenshots-meta-key = {
   PLATFORM() ->
@@ -140,45 +130,6 @@ screenshots-meta-key = {
                     "connectionErrorDetails",
                     {
                         "Firefox Screenshots": TERM_REFERENCE("screenshots-brand-name")
-                    },
-                    trim=True
-                )
-            ),
-            FTL.Message(
-                id=FTL.Identifier("screenshots-tour-body-intro"),
-                value=REPLACE(
-                    webextension_properties,
-                    "tourBodyIntroServerless",
-                    {
-                        "Firefox": TERM_REFERENCE("brand-product-name")
-                    },
-                    trim=True
-                )
-            ),
-            FTL.Message(
-                id=FTL.Identifier("screenshots-terms-and-privacy-notice"),
-                value=REPLACE(
-                    webextension_properties,
-                    "termsAndPrivacyNotice2",
-                    {
-                        "Firefox Screenshots": TERM_REFERENCE("screenshots-brand-name"),
-                        "{termsAndPrivacyNoticeTermsLink}": CONCAT(
-                            FTL.TextElement('<a data-l10n-name="terms-link">'),
-                            COPY(
-                                webextension_properties,
-                                "termsAndPrivacyNoticeTermsLink"
-                            ),
-                            FTL.TextElement("</a>")
-                        ),
-                        "{termsAndPrivacyNoticePrivacyLink}": CONCAT(
-                            FTL.TextElement(
-                                '<a data-l10n-name="privacy-link">'),
-                            COPY(
-                                webextension_properties,
-                                "termsAndPrivacyNoticyPrivacyLink"
-                            ),
-                            FTL.TextElement("</a>")
-                        )
                     },
                     trim=True
                 )
