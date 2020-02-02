@@ -311,7 +311,7 @@ bookmark-this-page-shortcut =
 bookmark-show-all-shortcut =
     .key = { PLATFORM() ->
         [linux] { COPY(browser_path, "bookmarksGtkCmd.commandkey") }
-       *[other] { COPY(browser_path, "bookmarksWinCmd.commandkey") }
+       *[other] { COPY(browser_path, "bookmarksCmd.commandkey") }
     }
 
 bookmark-show-sidebar-shortcut =
