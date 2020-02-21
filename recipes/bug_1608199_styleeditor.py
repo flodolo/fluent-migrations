@@ -17,27 +17,27 @@ def migrate(ctx):
     transforms_from(
 """
 styleeditor-new-button =
-    .tooltiptext = { COPY(from_path, "newButton.tooltip") }
-    .accesskey = { COPY(from_path, "newButton.accesskey") }
+    .tooltiptext = { COPY(from_path, "newButton.tooltip", trim:"True") }
+    .accesskey = { COPY(from_path, "newButton.accesskey", trim:"True") }
 styleeditor-import-button =
-    .tooltiptext = { COPY(from_path, "importButton.tooltip") }
-    .accesskey = { COPY(from_path, "importButton.accesskey") }
+    .tooltiptext = { COPY(from_path, "importButton.tooltip", trim:"True") }
+    .accesskey = { COPY(from_path, "importButton.accesskey", trim:"True") }
 styleeditor-visibility-toggle =
     .tooltiptext = { COPY(from_path, "visibilityToggle.tooltip")}
-    .accesskey = { COPY(from_path, "saveButton.accesskey") }
-styleeditor-save-button = { COPY(from_path, "saveButton.label") }
-    .tooltiptext = { COPY(from_path, "saveButton.tooltip") }
-    .accesskey = { COPY(from_path, "saveButton.accesskey") }
+    .accesskey = { COPY(from_path, "saveButton.accesskey", trim:"True") }
+styleeditor-save-button = { COPY(from_path, "saveButton.label", trim:"True") }
+    .tooltiptext = { COPY(from_path, "saveButton.tooltip", trim:"True") }
+    .accesskey = { COPY(from_path, "saveButton.accesskey", trim:"True") }
 styleeditor-options-button =
-    .tooltiptext = { COPY(from_path, "optionsButton.tooltip") }
-styleeditor-media-rules = { COPY(from_path, "mediaRules.label") }
+    .tooltiptext = { COPY(from_path, "optionsButton.tooltip", trim:"True") }
+styleeditor-media-rules = { COPY(from_path, "mediaRules.label", trim:"True") }
 styleeditor-editor-textbox =
-    .data-placeholder = { COPY(from_path, "editorTextbox.placeholder") }
-styleeditor-no-stylesheet = { COPY(from_path, "noStyleSheet.label") }
+    .data-placeholder = { COPY(from_path, "editorTextbox.placeholder", trim:"True") }
+styleeditor-no-stylesheet = { COPY(from_path, "noStyleSheet.label", trim:"True") }
 styleeditor-open-link-new-tab =
-    .label = { COPY(from_path, "openLinkNewTab.label") }
+    .label = { COPY(from_path, "openLinkNewTab.label", trim:"True") }
 styleeditor-copy-url =
-    .label = { COPY(from_path, "copyUrl.label") }
+    .label = { COPY(from_path, "copyUrl.label", trim:"True") }
 """, from_path="devtools/client/styleeditor.dtd"))
 
     ctx.add_transforms(
