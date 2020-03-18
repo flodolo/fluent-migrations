@@ -18,22 +18,22 @@ def migrate(ctx):
     transforms_from(
 """
 profile-selection-button-cancel =
-    .label = { COPY(from_path, "exit.label") }
+    .label = { COPY(from_path, "exit.label", trim:"True") }
 profile-selection-new-button =
-    .label = { COPY(from_path, "newButton.label") }
-    .accesskey = { COPY(from_path, "newButton.accesskey") }
+    .label = { COPY(from_path, "newButton.label", trim:"True") }
+    .accesskey = { COPY(from_path, "newButton.accesskey", trim:"True") }
 profile-selection-rename-button =
-    .label = { COPY(from_path, "renameButton.label") }
-    .accesskey = { COPY(from_path, "renameButton.accesskey") }
+    .label = { COPY(from_path, "renameButton.label", trim:"True") }
+    .accesskey = { COPY(from_path, "renameButton.accesskey", trim:"True") }
 profile-selection-delete-button =
-    .label = { COPY(from_path, "deleteButton.label") }
-    .accesskey = { COPY(from_path, "deleteButton.accesskey") }
+    .label = { COPY(from_path, "deleteButton.label", trim:"True") }
+    .accesskey = { COPY(from_path, "deleteButton.accesskey", trim:"True") }
 profile-manager-work-offline =
-    .label = { COPY(from_path, "offlineState.label") }
-    .accesskey = { COPY(from_path, "offlineState.accesskey") }
+    .label = { COPY(from_path, "offlineState.label", trim:"True") }
+    .accesskey = { COPY(from_path, "offlineState.accesskey", trim:"True") }
 profile-manager-use-selected =
-    .label = { COPY(from_path, "useSelected.label") }
-    .accesskey = { COPY(from_path, "useSelected.accesskey") }
+    .label = { COPY(from_path, "useSelected.label", trim:"True") }
+    .accesskey = { COPY(from_path, "useSelected.accesskey", trim:"True") }
 """, from_path="toolkit/chrome/mozapps/profile/profileSelection.dtd"))
     ctx.add_transforms(
     "toolkit/toolkit/global/profileSelection.ftl",
@@ -49,7 +49,8 @@ profile-manager-use-selected =
                     "windowtitle.label",
                     {
                         "&brandShortName;": TERM_REFERENCE("brand-short-name")
-                    }
+                    },
+                    trim=True
                 )
             )
         ]
@@ -64,7 +65,8 @@ profile-manager-use-selected =
                     "start.label",
                     {
                         "&brandShortName;": TERM_REFERENCE("brand-short-name")
-                    }
+                    },
+                    trim=True
                 )
             )
         ]
@@ -76,7 +78,8 @@ profile-manager-use-selected =
             "pmDescription.label",
             {
                 "&brandShortName;": TERM_REFERENCE("brand-short-name")
-            }
+            },
+            trim=True
         )
     ),
     ]
