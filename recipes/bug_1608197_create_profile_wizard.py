@@ -18,24 +18,24 @@ def migrate(ctx):
     transforms_from(
 """
 create-profile-window =
-    .title = { COPY(from_path, "newprofile.title") }
-    .style = { COPY(from_path, "window.size") }
+    .title = { COPY(from_path, "newprofile.title", trim:"True") }
+    .style = { COPY(from_path, "window.size", trim:"True") }
 profile-creation-explanation-4 = { PLATFORM() ->
-    [macos] { COPY(from_path, "profileCreationExplanation_4Mac.text") }
-   *[other] { COPY(from_path, "profileCreationExplanation_4.text") }
+    [macos] { COPY(from_path, "profileCreationExplanation_4Mac.text", trim:"True") }
+   *[other] { COPY(from_path, "profileCreationExplanation_4.text", trim:"True") }
   }
-profile-creation-intro = { COPY(from_path, "profileCreationIntro.text") }
-profile-prompt = { COPY(from_path, "profilePrompt.label") }
-    .accesskey = { COPY(from_path, "profilePrompt.accesskey") }
+profile-creation-intro = { COPY(from_path, "profileCreationIntro.text", trim:"True") }
+profile-prompt = { COPY(from_path, "profilePrompt.label", trim:"True") }
+    .accesskey = { COPY(from_path, "profilePrompt.accesskey", trim:"True") }
 profile-default-name =
-    .value = { COPY(from_path, "profileDefaultName") }
-profile-directory-explanation = { COPY(from_path, "profileDirectoryExplanation.text") }
+    .value = { COPY(from_path, "profileDefaultName", trim:"True") }
+profile-directory-explanation = { COPY(from_path, "profileDirectoryExplanation.text", trim:"True") }
 create-profile-choose-folder =
-    .label = { COPY(from_path, "button.choosefolder.label") }
-    .accesskey = { COPY(from_path, "button.choosefolder.accesskey") }
+    .label = { COPY(from_path, "button.choosefolder.label", trim:"True") }
+    .accesskey = { COPY(from_path, "button.choosefolder.accesskey", trim:"True") }
 create-profile-use-default =
-    .label = { COPY(from_path, "button.usedefault.label") }
-    .accesskey = { COPY(from_path, "button.usedefault.accesskey") }
+    .label = { COPY(from_path, "button.usedefault.label", trim:"True") }
+    .accesskey = { COPY(from_path, "button.usedefault.accesskey", trim:"True") }
 """, from_path="toolkit/chrome/mozapps/profile/createProfileWizard.dtd"))
     ctx.add_transforms(
     "toolkit/toolkit/global/createProfileWizard.ftl",
@@ -85,7 +85,8 @@ create-profile-use-default =
             "profileCreationExplanation_1.text",
             {
                 "&brandShortName;": TERM_REFERENCE("brand-short-name")
-            }
+            },
+            trim=True
         )
     ),
     FTL.Message(
@@ -95,7 +96,8 @@ create-profile-use-default =
             "profileCreationExplanation_2.text",
             {
                 "&brandShortName;": TERM_REFERENCE("brand-short-name")
-            }
+            },
+            trim=True
         )
     ),
     FTL.Message(
@@ -105,7 +107,8 @@ create-profile-use-default =
             "profileCreationExplanation_3.text",
             {
                 "&brandShortName;": TERM_REFERENCE("brand-short-name")
-            }
+            },
+            trim=True
         )
     ),
     FTL.Message(

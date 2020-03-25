@@ -16,11 +16,11 @@ def migrate(ctx):
     transforms_from(
 """
 sidebar-menu-bookmarks =
-    .label = { COPY(from_path, "bookmarksButton.label") }
+    .label = { COPY(from_path, "bookmarksButton.label", trim:"True") }
 sidebar-menu-history =
-    .label = { COPY(from_path, "historyButton.label") }
+    .label = { COPY(from_path, "historyButton.label", trim:"True") }
 sidebar-menu-synced-tabs =
-    .label = { COPY(from_path, "syncedTabs.sidebar.label") }
+    .label = { COPY(from_path, "syncedTabs.sidebar.label", trim:"True") }
 sidebar-menu-close =
-    .label = { COPY(from_path, "sidebarMenuClose.label") }
+    .label = { COPY(from_path, "sidebarMenuClose.label", trim:"True") }
 """, from_path="browser/chrome/browser/browser.dtd"))
