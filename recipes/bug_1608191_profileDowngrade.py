@@ -17,11 +17,11 @@ def migrate(ctx):
     transforms_from(
 """
 profiledowngrade-window-create =
-    .label = { COPY(from_path, "window.create") }
+    .label = { COPY(from_path, "window.create", trim:"True") }
 profiledowngrade-quit =
     .label = { PLATFORM() ->
-                 [windows] { COPY(from_path, "window.quit-win") }
-                *[other] { COPY(from_path, "window.quit-nonwin") }
+                 [windows] { COPY(from_path, "window.quit-win", trim:"True") }
+                *[other] { COPY(from_path, "window.quit-nonwin", trim:"True") }
              }
 """, from_path="toolkit/chrome/mozapps/profile/profileDowngrade.dtd"))
 
@@ -39,13 +39,18 @@ profiledowngrade-quit =
                                 "window.title",
                                 {
                                     "Firefox": TERM_REFERENCE("brand-product-name"),
-                                }
+                                },
+                                trim=True
                             )
                         ),
                         FTL.Attribute(
                             id=FTL.Identifier("style"),
-                            value=COPY("toolkit/chrome/mozapps/profile/profileDowngrade.dtd", "window.style")
+                            value=COPY(
+                                "toolkit/chrome/mozapps/profile/profileDowngrade.dtd",
+                                "window.style",
+                                trim=True
                             )
+                        )
                     ]
                 ),
                 FTL.Message(
@@ -58,6 +63,7 @@ profiledowngrade-quit =
                             "Firefox": TERM_REFERENCE("brand-product-name"),
                             "&syncBrand.fxAccount.label;": TERM_REFERENCE("fxaccount-brand-name"),
                         },
+                        trim=True
                     ),
                 ),
             FTL.Message(
@@ -68,7 +74,8 @@ profiledowngrade-quit =
                     {
                         "&brandShortName;": TERM_REFERENCE("brand-short-name"),
                         "Firefox": TERM_REFERENCE("brand-product-name"),
-                    }
+                    },
+                    trim=True
                 ),
             ),
         ]
