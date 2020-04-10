@@ -16,14 +16,14 @@ def migrate(ctx):
     transforms_from(
 """
 all-tabs-menu-undo-close-tab =
-  .label = { COPY(from_path, "undoCloseTab.label") }
+  .label = { COPY(from_path, "undoCloseTab.label", trim:"True") }
 all-tabs-menu-search-tabs =
-  .label = { COPY(from_path, "allTabsMenu.searchTabs.label") }
+  .label = { COPY(from_path, "allTabsMenu.searchTabs.label", trim:"True") }
 all-tabs-menu-new-user-context =
-  .label = { COPY(from_path, "newUserContext.label") }
+  .label = { COPY(from_path, "newUserContext.label", trim:"True") }
 all-tabs-menu-hidden-tabs =
-  .label = { COPY(from_path, "hiddenTabs.label") }
+  .label = { COPY(from_path, "hiddenTabs.label", trim:"True") }
 all-tabs-menu-manage-user-context =
-  .label = { COPY(from_path, "manageUserContext.label") }
-  .accesskey = { COPY(from_path, "manageUserContext.accesskey") }
+  .label = { COPY(from_path, "manageUserContext.label", trim:"True") }
+  .accesskey = { COPY(from_path, "manageUserContext.accesskey", trim:"True") }
 """, from_path="browser/chrome/browser/browser.dtd"))
