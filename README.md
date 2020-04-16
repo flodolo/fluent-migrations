@@ -17,11 +17,9 @@ $ pip install mercurial python-hglib
 
 3. Clone [gecko-strings-quarantine](https://hg.mozilla.org/users/axel_mozilla.com/gecko-strings-quarantine).
 
-4. Clone all l10n repositories on your system. You can use [this
-script](https://github.com/flodolo/scripts/blob/master/mozilla_l10n/update_locales.py)
-to generate a list of supported repositories, and [this
-script](https://github.com/flodolo/scripts/blob/master/mozilla_l10n/clone.sh) to
-clone them.
+4. Clone all l10n repositories on your system. You can use [these
+script](https://github.com/flodolo/scripts/tree/master/mozilla_l10n/clone_hgmo)
+to simplify the process.
 
 5. Copy `config/config.dist` as `config`, and adapt the paths to your system.
 
@@ -32,19 +30,19 @@ clone them.
 To dry-run all locales use:
 
 ```
-$ migration.sh no-updates
+$ ./scripts/migration.sh no-updates
 ```
 
 To run one locale without pushing:
 
 ```
-$ migration.sh it wet-run
+$ ./scripts/ migration.sh it wet-run
 ```
 
 For running migrations on all locales and push to repository, use:
 
 ```
-$ migration.sh wet-run push
+$ ./scripts/ migration.sh wet-run push
 ```
 
-Run `/scripts/migration.sh help` for help on all available command line options.
+Run `./scripts/migration.sh help` for help on all available command line options.
