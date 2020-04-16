@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 Pass a version number like 65 to
@@ -8,17 +8,41 @@ Pass a version number like 65 to
 
 import argparse
 import os
-
+import sys
 
 def main():
+
+    # Get absolute path of the repository's root from the script location
+    root_folder = os.path.abspath(os.path.join(
+        os.path.dirname(__file__), os.pardir))
+    config_file = os.path.join(root_folder, 'config', 'config')
+
+    if not os.path.exists(config_file):
+        print('ERROR: config file is missing')
+        sys.exit(1)
+
+    # Try importing the mozilla-unified path from config/config
+    with open(config_file, 'r') as cfg:
+        lines = cfg.readlines()
+        for line in lines:
+            if line.startswith("mozilla_unified_path"):
+                mozilla_unified_path = line.split('=')[1].strip().strip('"')
+
+    try:
+        mozilla_unified_path
+    except NameError:
+        print('mozilla_unified_path is not defined in the config file')
+        sys.exit(1)
 
     parser = argparse.ArgumentParser()
     parser.add_argument('version_number', help='Version number, e.g. 65')
     args = parser.parse_args()
 
     # Get the list of recipes
-    recipes_path = '/Users/flodolo/github/fluent-migrations/recipes/fx{}'.format(args.version_number)
-    hg_path = '/Users/flodolo/mozilla/mercurial/mozilla-unified/python/l10n/fluent_migrations'
+    recipes_path = os.path.join(root_folder, 'recipes', 'fx{}')
+    recipes_path = recipes_path.format(args.version_number)
+    hg_path = os.path.join(
+        mozilla_unified_path, 'python', 'l10n', 'fluent_migrations')
 
     for root, dirs, files in os.walk(recipes_path, followlinks=True):
         # Exclude hidden folders and files
