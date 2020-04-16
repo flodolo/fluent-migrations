@@ -10,20 +10,18 @@ strings, and a script to run the migration.
 ```bash
 $ virtualenv venv
 $ source venv/bin/activate
-$ pip install mercurial python-hglib
+$ pip install mercurial python-hglib fluent.migrate
 ```
 
-2. Clone [fluent-migration](https://hg.mozilla.org/l10n/fluent-migration) on your system and install it by running `pip install -e .` from the root of the repository.
+2. Clone [gecko-strings-quarantine](https://hg.mozilla.org/users/axel_mozilla.com/gecko-strings-quarantine).
 
-3. Clone [gecko-strings-quarantine](https://hg.mozilla.org/users/axel_mozilla.com/gecko-strings-quarantine).
+3. Clone all l10n repositories on your system. You can use [these
+scripts](https://github.com/flodolo/scripts/tree/master/mozilla_l10n/clone_hgmo)
+to automate the process.
 
-4. Clone all l10n repositories on your system. You can use [these
-script](https://github.com/flodolo/scripts/tree/master/mozilla_l10n/clone_hgmo)
-to simplify the process.
+4. Copy `config/config.dist` as `config`, and adapt the paths to your system.
 
-5. Copy `config/config.dist` as `config`, and adapt the paths to your system.
-
-6. Use `/scripts/migration.sh` to run the migration.
+5. Use `/scripts/migration.sh` to run the migration.
 
 ## Command Line Options
 
