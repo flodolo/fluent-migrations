@@ -36,13 +36,13 @@ $ ./scripts/migration.sh no-updates
 To run one locale without pushing:
 
 ```
-$ ./scripts/ migration.sh it wet-run
+$ ./scripts/migration.sh it wet-run
 ```
 
 For running migrations on all locales and push to repository, use:
 
 ```
-$ ./scripts/ migration.sh wet-run push
+$ ./scripts/migration.sh wet-run push
 ```
 
 Run `./scripts/migration.sh help` for help on all available command line options.
