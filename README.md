@@ -1,9 +1,9 @@
 # Fluent Migrations
 
 This repository stores a copy of each migration module created for Gecko
-strings, and a script to run the migration.
+strings, and a script to run the migrations.
 
-## Running Migrations
+## Set up the system
 
 1. Create a virtual environment and install dependencies:
 
@@ -22,6 +22,21 @@ to automate the process.
 4. Copy `config/config.dist` as `config`, and adapt the paths to your system.
 
 5. Use `/scripts/migration.sh` to run the migration.
+
+## Run migrations and organization of the recipes folder
+
+In order to run a migration, recipes need to be stored directly in the
+`recipes` folder. The script will look for any Python (`.py`) file starting
+with `bug_`, allowing to run multiple recipes in one execution.
+
+After running the migration on all l10n repositories, recipes need to be moved
+in one of the `fx` subfolders. For example, if the migration landed in Firefox
+77, recipes need to be moved to `fx77`. It’s then possible to use the utility
+script `cleanup_migrations.py` to list all recipes landed in a specific version
+of Firefox, and remove them from a local `mozilla-unified` clone.
+
+The `no_train` folder is used for recipes that never landed in
+`mozilla-central`.
 
 ## Command Line Options
 
