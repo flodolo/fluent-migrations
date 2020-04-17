@@ -10,6 +10,7 @@ import argparse
 import os
 import sys
 
+
 def main():
 
     # Get absolute path of the repository's root from the script location
