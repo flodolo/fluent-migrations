@@ -15,9 +15,9 @@ def migrate(ctx):
         "browser/browser/browser.ftl",
         transforms_from("""
 browser-window-minimize-button =
-  .tooltiptext = { COPY(from_path, "fullScreenMinimize.tooltip") }
+  .tooltiptext = { COPY(from_path, "fullScreenMinimize.tooltip", trim:"True") }
 browser-window-restore-button =
-  .tooltiptext = { COPY(from_path, "fullScreenRestore.tooltip") }
+  .tooltiptext = { COPY(from_path, "fullScreenRestore.tooltip", trim:"True") }
 browser-window-close-button =
-  .tooltiptext = { COPY(from_path, "fullScreenClose.tooltip") }
+  .tooltiptext = { COPY(from_path, "fullScreenClose.tooltip", trim:"True") }
 """, from_path="browser/chrome/browser/browser.dtd"))
