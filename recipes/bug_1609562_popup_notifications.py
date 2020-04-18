@@ -17,11 +17,11 @@ def migrate(ctx):
         transforms_from(
 """
 popup-select-camera =
-    .value = { COPY(from_path, "getUserMedia.selectCamera.label") }
-    .accesskey = { COPY(from_path, "getUserMedia.selectCamera.accesskey") }
+    .value = { COPY(from_path, "getUserMedia.selectCamera.label", trim:"True") }
+    .accesskey = { COPY(from_path, "getUserMedia.selectCamera.accesskey", trim:"True") }
 popup-select-microphone =
-    .value = { COPY(from_path, "getUserMedia.selectMicrophone.label") }
-    .accesskey = { COPY(from_path, "getUserMedia.selectMicrophone.accesskey") }
-popup-all-windows-shared = { COPY(from_path, "getUserMedia.allWindowsShared.message") }
+    .value = { COPY(from_path, "getUserMedia.selectMicrophone.label", trim:"True") }
+    .accesskey = { COPY(from_path, "getUserMedia.selectMicrophone.accesskey", trim:"True") }
+popup-all-windows-shared = { COPY(from_path, "getUserMedia.allWindowsShared.message", trim:"True") }
 """, from_path="browser/chrome/browser/browser.dtd")
     )
