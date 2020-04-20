@@ -17,11 +17,11 @@ def migrate(ctx):
     transforms_from(
 """
 elevation-update-wizard =
-    .title = { COPY(from_path, "updateWizard.title") }
+    .title = { COPY(from_path, "updateWizard.title", trim:"True") }
 elevation-details-link-label =
-    .value = { COPY(from_path, "details.link") }
-elevation-finished-page = { COPY(from_path, "finishedPage.title") }
-elevation-finished-background = { COPY(from_path, "finishedBackground.name") }
+    .value = { COPY(from_path, "details.link", trim:"True") }
+elevation-finished-page = { COPY(from_path, "finishedPage.title", trim:"True") }
+elevation-finished-background = { COPY(from_path, "finishedBackground.name", trim:"True") }
 """,from_path="toolkit/chrome/mozapps/update/updates.dtd"))
 
     ctx.add_transforms(
@@ -61,6 +61,5 @@ elevation-finished-background = { COPY(from_path, "finishedBackground.name") }
                     trim = True
                 )
             ),
-
         ]
     )
