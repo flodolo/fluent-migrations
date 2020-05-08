@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 """
-Pass a version number like 65 to
+Pass a version number like 65 to:
 - Get the list of recipes from the fluent migrations landed in that version
 - Remove the recipes from the mozilla-unified repository
+- Get a link to file a bug in Bugzilla
 """
 
 import argparse

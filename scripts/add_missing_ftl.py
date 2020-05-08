@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 
+'''
+This script is used to add missing FTL files to locales that are above
+a certain threshold of completion in Pontoon.
+
+This is used to avoid falling back to English in the UI when a file in a
+Fluent bundle is missing.
+'''
+
 import json
 import os
 import subprocess
