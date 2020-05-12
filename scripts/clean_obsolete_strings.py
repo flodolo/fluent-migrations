@@ -127,6 +127,11 @@ def main():
 
             output = serialize(filename, reference, target, {})
 
+            # zh-CN has an extra string that needs to be kept (start page)
+            if locale == 'zh-CN' and filename == 'browser/chrome/browser/browser.properties':
+                output += b'\n# DO NOT REMOVE: this string is used to set up the home page for zh-CN\n'
+                output += b'browser.startup.homepage = https://start.firefoxchina.cn\n'
+
             with open(target_filename, 'wb') as f:
                 f.write(output)
 
