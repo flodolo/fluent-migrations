@@ -25,6 +25,7 @@ def extractFileList(repository_path):
     ]
 
     excluded_folders = (
+        '.hg',
         'calendar',
         'chat',
         'editor',
@@ -36,17 +37,17 @@ def extractFileList(repository_path):
 
     file_list = []
     for root, dirs, files in os.walk(repository_path, followlinks=True):
+        # Ignore excluded folders
+        if root == repository_path:
+            dirs[:] = [d for d in dirs if not d in excluded_folders]
+
         for filename in files:
-            filename = os.path.relpath(
-                os.path.join(root, filename),
-                repository_path
-            )
-            # Ignore specific products
-            if filename.startswith(excluded_folders):
-                continue
-            for supported_format in supported_formats:
-                if filename.endswith(supported_format):
-                    file_list.append(filename)
+            if os.path.splitext(filename)[1] in supported_formats:
+                filename = os.path.relpath(
+                    os.path.join(root, filename),
+                    repository_path
+                )
+                file_list.append(filename)
     file_list.sort()
 
     return file_list
