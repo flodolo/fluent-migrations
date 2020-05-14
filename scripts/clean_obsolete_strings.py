@@ -98,12 +98,14 @@ def main():
     for locale in locales:
         print('Updating: {}'.format(locale))
         locale_path = os.path.join(l10n_clones_path, locale)
-        target_file_list = extractFileList(locale_path)
 
         # Update locale repository
         subprocess.run([
             'hg', '-R', locale_path, 'pull', '-u'
         ])
+
+        # Create list of target files
+        target_file_list = extractFileList(locale_path)
 
         # Ignore files in locale that are not available in the source
         target_file_list = [
@@ -141,7 +143,7 @@ def main():
         ])
         subprocess.run([
             'hg', '-R', locale_path, 'commit', '-m',
-            'Remove obsolete strings'
+            'Remove obsolete files and reformat files'
         ])
         subprocess.run([
             'hg', '-R', locale_path, 'push'
