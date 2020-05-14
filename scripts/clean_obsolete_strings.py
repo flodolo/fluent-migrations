@@ -7,6 +7,7 @@ and reformat files accordingly to the source content (en-US).
 
 from compare_locales.parser import getParser
 from compare_locales.serializer import serialize
+import local_config
 import os
 import subprocess
 import sys
@@ -54,35 +55,13 @@ def extractFileList(repository_path):
 
 
 def main():
-    # Get absolute path of the repository's root from the script location
-    root_folder = os.path.abspath(os.path.join(
-        os.path.dirname(__file__), os.pardir))
-    config_file = os.path.join(root_folder, 'config', 'config')
-
-    if not os.path.exists(config_file):
-        print('ERROR: config file is missing')
-        sys.exit(1)
-
-    # Try importing the path to l10n clones from config/config
-    with open(config_file, 'r') as cfg:
-        lines = cfg.readlines()
-        for line in lines:
-            if line.startswith("l10n_clones_path"):
-                l10n_clones_path = line.split('=')[1].strip().strip('"')
-            if line.startswith("quarantine_path"):
-                quarantine_path = line.split('=')[1].strip().strip('"')
-
-    # Make sure paths are set correctly
+    # Read paths from config file
     try:
-        l10n_clones_path
-    except NameError:
-        print('l10n_clones_path is not defined in the config file')
-        sys.exit(1)
-    try:
-        quarantine_path
-    except NameError:
-        print('quarantine_path is not defined in the config file')
-        sys.exit(1)
+        [l10n_clones_path, quarantine_path] = local_config.read_config(
+            ['l10n_clones_path', 'quarantine_path'])
+    except Exception as e:
+        print('Error reading paths from config')
+        print(e)
 
     locales = [x for x in os.listdir(
         l10n_clones_path) if not x.startswith('.')]

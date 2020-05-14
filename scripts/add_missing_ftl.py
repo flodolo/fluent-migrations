@@ -9,6 +9,7 @@ Fluent bundle is missing.
 '''
 
 import json
+import local_config
 import os
 import subprocess
 import sys
@@ -19,19 +20,29 @@ from urllib.request import urlopen
 def extractFileList(repository_path):
     '''Extract the list of FTL files.'''
 
+    excluded_folders = (
+        '.hg',
+        'calendar',
+        'chat',
+        'editor',
+        'extensions',
+        'mail',
+        'other-licenses',
+        'suite',
+    )
+
     file_list = []
     for root, dirs, files in os.walk(repository_path, followlinks=True):
+        # Ignore excluded folders
+        if root == repository_path:
+            dirs[:] = [d for d in dirs if not d in excluded_folders]
+
         for file_name in files:
-            if file_name.endswith('.ftl'):
+            if os.path.splitext(file_name)[1] == '.ftl':
                 file_name = os.path.relpath(
                     os.path.join(root, file_name),
                     repository_path
                 )
-
-                # Ignore Thunderbird
-                if file_name.startswith(('calendar/', 'mail/', '/suite')):
-                    continue
-
                 file_list.append(file_name)
     file_list.sort()
 
@@ -39,23 +50,13 @@ def extractFileList(repository_path):
 
 
 def main():
-    # Get absolute path of the repository's root from the script location
-    root_folder = os.path.abspath(os.path.join(
-        os.path.dirname(__file__), os.pardir))
-    config_file = os.path.join(root_folder, 'config', 'config')
-
-    if not os.path.exists(config_file):
-        print('ERROR: config file is missing')
-        sys.exit(1)
-
-    # Try importing the path to l10n clones from config/config
-    with open(config_file, 'r') as cfg:
-        lines = cfg.readlines()
-        for line in lines:
-            if line.startswith("l10n_clones_path"):
-                l10n_clones_path = line.split('=')[1].strip().strip('"')
-            if line.startswith("quarantine_path"):
-                quarantine_path = line.split('=')[1].strip().strip('"')
+    # Read paths from config file
+    try:
+        [l10n_clones_path, quarantine_path] = local_config.read_config(
+            ['l10n_clones_path', 'quarantine_path'])
+    except Exception as e:
+        print('Error reading paths from config')
+        print(e)
 
     # Make sure paths are set correctly
     try:
