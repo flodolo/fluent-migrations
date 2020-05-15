@@ -166,7 +166,7 @@ def main():
                 'hg', '-R', locale_path, 'push'
             ])
         else:
-            print('(dry run')
+            print('(dry run)')
 
 
 if __name__ == '__main__':
