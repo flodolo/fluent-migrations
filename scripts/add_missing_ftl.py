@@ -58,18 +58,6 @@ def main():
         print('Error reading paths from config')
         print(e)
 
-    # Make sure paths are set correctly
-    try:
-        l10n_clones_path
-    except NameError:
-        print('l10n_clones_path is not defined in the config file')
-        sys.exit(1)
-    try:
-        quarantine_path
-    except NameError:
-        print('quarantine_path is not defined in the config file')
-        sys.exit(1)
-
     locales = [x for x in os.listdir(
         l10n_clones_path) if not x.startswith('.')]
     locales.sort()
