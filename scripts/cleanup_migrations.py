@@ -10,7 +10,6 @@ Pass a version number like 65 to:
 import argparse
 import local_config
 import os
-import sys
 
 
 def main():

@@ -20,7 +20,6 @@ import argparse
 import local_config
 import os
 import subprocess
-import sys
 
 
 def extractFileList(repository_path):
@@ -49,7 +48,7 @@ def extractFileList(repository_path):
     for root, dirs, files in os.walk(repository_path, followlinks=True):
         # Ignore excluded folders
         if root == repository_path:
-            dirs[:] = [d for d in dirs if not d in excluded_folders]
+            dirs[:] = [d for d in dirs if d not in excluded_folders]
 
         for filename in files:
             if os.path.splitext(filename)[1] in supported_formats:
@@ -102,8 +101,7 @@ def main():
         excluded_locales = [
             'da', 'it', 'ja', 'ja-JP-mac',
         ]
-        locales = [l for l in locales if not l in excluded_locales]
-        locales.sort()
+        locales = sorted([x for x in locales if x not in excluded_locales])
 
     # Get a list of supported files in the source repository
     source_file_list = extractFileList(quarantine_path)

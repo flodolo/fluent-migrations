@@ -32,7 +32,7 @@ def read_config(params):
 
     results = []
     for param in params:
-        if not param in paths:
+        if param not in paths:
             print('{} is not defined in the config file'.format(param))
             sys.exit(1)
         else:
@@ -43,6 +43,3 @@ def read_config(params):
         results.append(paths[param])
 
     return results
-
-if __name__ == '__main__':
-    main()

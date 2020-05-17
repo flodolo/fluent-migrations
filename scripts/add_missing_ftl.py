@@ -12,7 +12,6 @@ import json
 import local_config
 import os
 import subprocess
-import sys
 from urllib.parse import quote as urlquote
 from urllib.request import urlopen
 
@@ -35,7 +34,7 @@ def extractFileList(repository_path):
     for root, dirs, files in os.walk(repository_path, followlinks=True):
         # Ignore excluded folders
         if root == repository_path:
-            dirs[:] = [d for d in dirs if not d in excluded_folders]
+            dirs[:] = [d for d in dirs if d not in excluded_folders]
 
         for file_name in files:
             if os.path.splitext(file_name)[1] == '.ftl':
@@ -58,9 +57,7 @@ def main():
         print('Error reading paths from config')
         print(e)
 
-    locales = [x for x in os.listdir(
-        l10n_clones_path) if not x.startswith('.')]
-    locales.sort()
+    locales = sorted([x for x in os.listdir(l10n_clones_path) if not x.startswith('.')])
 
     # Get a list of FTL files in the source repository
     complete_source_files = extractFileList(quarantine_path)
