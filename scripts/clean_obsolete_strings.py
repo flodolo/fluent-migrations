@@ -41,7 +41,6 @@ def extractFileList(repository_path):
         'chat',
         'editor',
         'extensions',
-        'mail',
         'other-licenses',
         'suite',
     )
