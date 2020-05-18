@@ -36,10 +36,8 @@ def extractFileList(repository_path):
 
     excluded_folders = (
         '.hg',
-        'calendar',
         'chat',
         'editor',
-        'extensions',
         'other-licenses',
         'suite',
     )
