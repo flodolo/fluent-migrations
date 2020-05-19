@@ -2,7 +2,9 @@
 
 '''
 
-This script is used to remove empty files, i.e. files with only comments.
+This script is used to remove:
+- Obsolete files (available in the locale but not in quarantine).
+- Empty files, i.e. files with only comments.
 
 Fluent files need to be ignored, since we add empty files to avoid falling
 back to English.
@@ -51,10 +53,10 @@ def extractFileList(repository_path):
                     os.path.join(root, filename),
                     repository_path
                 )
-                # Ignore excluded_folders
+                # Ignore excluded folders
                 if filename.startswith(excluded_paths):
                     continue
-                # Ignore some files
+                # Ignore excluded files
                 if filename.endswith(excluded_files):
                     continue
                 file_list.append(filename)
