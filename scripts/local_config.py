@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 """
 This code is imported from other scripts to read paths from the
 configuration file.
@@ -17,8 +15,7 @@ def read_config(params):
 
     # Abort if config file is missing
     if not os.path.exists(config_file):
-        print('ERROR: config file is missing')
-        sys.exit(1)
+        sys.exit('ERROR: config file is missing')
 
     # Read all available paths in the config file
     paths = {}
@@ -33,13 +30,11 @@ def read_config(params):
     results = []
     for param in params:
         if param not in paths:
-            print('{} is not defined in the config file'.format(param))
-            sys.exit(1)
+            sys.exit('{} is not defined in the config file'.format(param))
         else:
             if not os.path.exists(paths[param]):
-                print('Path defined for {} ({}) does not exist'.format(
+                sys.exit('Path defined for {} ({}) does not exist'.format(
                     param, paths[param]))
-                sys.exit(1)
         results.append(paths[param])
 
     return results

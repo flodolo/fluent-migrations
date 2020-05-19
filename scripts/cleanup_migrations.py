@@ -20,12 +20,7 @@ def main():
         os.path.dirname(__file__), os.pardir))
 
     # Read paths from config file
-    try:
-        [mozilla_unified_path] = local_config.read_config(
-            ['mozilla_unified_path'])
-    except Exception as e:
-        print('Error reading paths from config')
-        print(e)
+    [mozilla_unified_path] = local_config.read_config(['mozilla_unified_path'])
 
     parser = argparse.ArgumentParser()
     parser.add_argument('version_number', help='Version number, e.g. 65')

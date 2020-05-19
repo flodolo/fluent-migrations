@@ -85,12 +85,8 @@ def main():
     args = p.parse_args()
 
     # Read paths from config file
-    try:
-        [l10n_clones_path, quarantine_path] = local_config.read_config(
-            ['l10n_clones_path', 'quarantine_path'])
-    except Exception as e:
-        print('Error reading paths from config')
-        print(e)
+    [l10n_clones_path, quarantine_path] = local_config.read_config(
+        ['l10n_clones_path', 'quarantine_path'])
 
     if args.locale:
         locales = [args.locale]

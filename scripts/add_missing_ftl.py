@@ -50,12 +50,8 @@ def extractFileList(repository_path):
 
 def main():
     # Read paths from config file
-    try:
-        [l10n_clones_path, quarantine_path] = local_config.read_config(
-            ['l10n_clones_path', 'quarantine_path'])
-    except Exception as e:
-        print('Error reading paths from config')
-        print(e)
+    [l10n_clones_path, quarantine_path] = local_config.read_config(
+        ['l10n_clones_path', 'quarantine_path'])
 
     locales = sorted([x for x in os.listdir(l10n_clones_path) if not x.startswith('.')])
 
