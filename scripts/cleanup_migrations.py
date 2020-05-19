@@ -8,8 +8,8 @@ Pass a version number like 65 to:
 """
 
 import argparse
+import local_config
 import os
-import sys
 
 
 def main():
@@ -18,24 +18,9 @@ def main():
     # Get absolute path of the repository's root from the script location
     root_folder = os.path.abspath(os.path.join(
         os.path.dirname(__file__), os.pardir))
-    config_file = os.path.join(root_folder, 'config', 'config')
 
-    if not os.path.exists(config_file):
-        print('ERROR: config file is missing')
-        sys.exit(1)
-
-    # Try importing the mozilla-unified path from config/config
-    with open(config_file, 'r') as cfg:
-        lines = cfg.readlines()
-        for line in lines:
-            if line.startswith("mozilla_unified_path"):
-                mozilla_unified_path = line.split('=')[1].strip().strip('"')
-
-    try:
-        mozilla_unified_path
-    except NameError:
-        print('mozilla_unified_path is not defined in the config file')
-        sys.exit(1)
+    # Read paths from config file
+    [mozilla_unified_path] = local_config.read_config(['mozilla_unified_path'])
 
     parser = argparse.ArgumentParser()
     parser.add_argument('version_number', help='Version number, e.g. 65')
