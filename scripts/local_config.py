@@ -19,12 +19,12 @@ def read_config(params):
 
     # Read all available paths in the config file
     paths = {}
-    with open(config_file, 'r') as cfg:
-        lines = cfg.readlines()
-        # Ignore comments and empty lines
-        lines[:] = [l.strip() for l in lines if l.strip() != '' and not l.startswith('#')]
-
-        for line in lines:
+    with open(config_file, 'r') as cfg_file:
+        for line in cfg_file:
+            line = line.strip()
+            # Ignore comments and empty lines
+            if line == '' or line.startswith('#'):
+                continue
             paths[line.split('=')[0]] = line.split('=')[1].strip('"')
 
     results = []
