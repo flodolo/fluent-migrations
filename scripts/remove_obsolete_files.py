@@ -9,6 +9,13 @@ This script is used to remove:
 Fluent files need to be ignored, since we add empty files to avoid falling
 back to English.
 
+By default, the script runs on all locales, pulls from the repository but
+doesn't commit local changes. To commit:
+
+./remove_obsolete_files.py --wetrun
+
+See "./remove_obsolete_files.py --help" for other options.
+
 '''
 
 from compare_locales import parser
@@ -96,7 +103,7 @@ def findEmptyFiles(repository_path):
 
 def main():
     p = argparse.ArgumentParser(
-        description='Remove empty files in localized repositories')
+        description='Remove obsolete and empty files in localized repositories')
 
     p.add_argument(
         '--noupdates',
@@ -124,9 +131,8 @@ def main():
     if args.locale:
         locales = [args.locale]
     else:
-        locales = [x for x in os.listdir(
-            l10n_clones_path) if not x.startswith('.')]
-        locales.sort()
+        locales = sorted([x for x in os.listdir(
+            l10n_clones_path) if not x.startswith('.')])
 
     # Store the list of files in quarantine
     source_file_list = extractFileList(quarantine_path)

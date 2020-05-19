@@ -8,9 +8,9 @@ to the source content (en-US).
 By default, the script runs on all locales, pulls from the repository but
 doesn't commit local changes. To commit:
 
-./clean_obsolete_strings.py --wetrun
+./remove_obsolete_strings.py --wetrun
 
-See "./clean_obsolete_strings.py --help" for other options.
+See "./remove_obsolete_strings.py --help" for other options.
 
 '''
 

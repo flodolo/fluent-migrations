@@ -6,8 +6,16 @@ a certain threshold of completion in Pontoon.
 
 This is used to avoid falling back to English in the UI when a file in a
 Fluent bundle is missing.
+
+By default, the script runs on all locales, pulls from the repository but
+doesn't commit local changes. To commit:
+
+./add_missing_ftl.py --wetrun
+
+See "./add_missing_ftl.py --help" for other options.
 '''
 
+import argparse
 import json
 import local_config
 import os
@@ -49,11 +57,37 @@ def extractFileList(repository_path):
 
 
 def main():
+    p = argparse.ArgumentParser(
+        description='Add missing FTL files in localized repositories')
+
+    p.add_argument(
+        '--noupdates',
+        help='Do not pull from remote',
+        action='store_true'
+    )
+    p.add_argument(
+        '--wetrun',
+        help='Commit local changes and push them to remote',
+        action='store_true'
+    )
+    p.add_argument(
+        '--locale',
+        help='Run on a specific locale',
+        action='store',
+        default=''
+    )
+    args = p.parse_args()
+
     # Read paths from config file
     [l10n_clones_path, quarantine_path] = local_config.read_config(
         ['l10n_clones_path', 'quarantine_path'])
 
-    locales = sorted([x for x in os.listdir(l10n_clones_path) if not x.startswith('.')])
+    # Get the list of locales
+    if args.locale:
+        locales = [args.locale]
+    else:
+        locales = sorted([x for x in os.listdir(
+            l10n_clones_path) if not x.startswith('.')])
 
     # Get a list of FTL files in the source repository
     complete_source_files = extractFileList(quarantine_path)
@@ -155,10 +189,11 @@ def main():
 
         l10n_repo = os.path.join(l10n_clones_path, locale)
 
-        # Update locale repository
-        subprocess.run([
-            'hg', '-R', l10n_repo, 'pull', '-u'
-        ])
+        # Update locale repository, unless --noupdates was called explicitly
+        if not args.noupdates:
+            subprocess.run([
+                'hg', '-R', l10n_repo, 'pull', '-u'
+            ])
 
         # Create list of files
         locale_files = extractFileList(l10n_repo)
@@ -178,17 +213,20 @@ def main():
         if added_files > 0:
             out_log.append('{}: added {} files'.format(locale, added_files))
             files_total += added_files
-            subprocess.run([
-                'hg', '-R', l10n_repo, 'addremove'
-            ])
-            subprocess.run([
-                'hg', '-R', l10n_repo, 'commit', '-m',
-                'Bug 1586984 - Add empty FTL files to repository to avoid English fallback'
-            ])
-            subprocess.run([
-                'hg', '-R', l10n_repo, 'push'
-            ])
+            if args.wetrun:
+                subprocess.run([
+                    'hg', '-R', l10n_repo, 'addremove'
+                ])
+                subprocess.run([
+                    'hg', '-R', l10n_repo, 'commit', '-m',
+                    'Bug 1586984 - Add empty FTL files to repository to avoid English fallback'
+                ])
+                subprocess.run([
+                    'hg', '-R', l10n_repo, 'push'
+                ])
 
+    if not args.wetrun:
+        print('*** DRY RUN ***')
     print('Total files added: {}'.format(files_total))
     print('\n'.join(out_log))
 
