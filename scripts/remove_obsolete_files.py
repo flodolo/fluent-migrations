@@ -176,18 +176,19 @@ def main():
             print('Empty files:')
             print('\n'.join(empty_files_list))
 
-        if args.wetrun and need_commit:
-            # Commit changes
-            subprocess.run([
-                'hg', '-R', locale_path, 'addremove'
-            ])
-            subprocess.run([
-                'hg', '-R', locale_path, 'commit', '-m',
-                'Bug 1443175 - Remove obsolete and empty files'
-            ])
-            subprocess.run([
-                'hg', '-R', locale_path, 'push'
-            ])
+        if args.wetrun:
+            if need_commit:
+                # Commit changes
+                subprocess.run([
+                    'hg', '-R', locale_path, 'addremove'
+                ])
+                subprocess.run([
+                    'hg', '-R', locale_path, 'commit', '-m',
+                    'Bug 1443175 - Remove obsolete and empty files'
+                ])
+                subprocess.run([
+                    'hg', '-R', locale_path, 'push'
+                ])
         else:
             print('(dry run)')
 
