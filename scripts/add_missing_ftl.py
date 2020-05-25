@@ -76,6 +76,12 @@ def main():
         action='store',
         default=''
     )
+    p.add_argument(
+        '--threshold',
+        help='Minimum percentage of completion in completion under which locales are ignored',
+        action='store',
+        default='70'
+    )
     args = p.parse_args()
 
     # Read paths from config file
@@ -94,47 +100,11 @@ def main():
 
     # Manual list of stand-alone files that's not useful to add
     ignored_files = [
-        'browser/browser/aboutCertError.ftl',
-        'browser/browser/aboutConfig.ftl',
-        'browser/browser/aboutLogins.ftl',
-        'browser/browser/aboutPolicies.ftl',
-        'browser/browser/aboutPrivateBrowsing.ftl',
-        'browser/browser/aboutRestartRequired.ftl',
-        'browser/browser/aboutRobots.ftl',
-        'browser/browser/aboutSessionRestore.ftl',
-        'browser/browser/aboutTabCrashed.ftl',
-        'browser/browser/newInstallPage.ftl',
-        'browser/browser/newtab/asrouter.ftl',
-        'browser/browser/newtab/newtab.ftl',
-        'browser/browser/newtab/onboarding.ftl',
-        'browser/browser/policies/policies-descriptions.ftl',
-        'browser/browser/preferences/fxaPairDevice.ftl',
-        'browser/browser/protections.ftl',
-        'browser/browser/touchbar/touchbar.ftl',
         'devtools/client/aboutdebugging.ftl',
         'devtools/client/accessibility.ftl',
         'devtools/client/application.ftl',
         'devtools/client/tooltips.ftl',
         'devtools/startup/aboutDevTools.ftl',
-        'security/manager/security/certificates/certManager.ftl',
-        'security/manager/security/certificates/deviceManager.ftl',
-        'toolkit/crashreporter/aboutcrashes.ftl',
-        'toolkit/toolkit/about/aboutAbout.ftl',
-        'toolkit/toolkit/about/aboutAddons.ftl',
-        'toolkit/toolkit/about/aboutCompat.ftl',
-        'toolkit/toolkit/about/aboutConfig.ftl',
-        'toolkit/toolkit/about/aboutNetworking.ftl',
-        'toolkit/toolkit/about/aboutPerformance.ftl',
-        'toolkit/toolkit/about/aboutPlugins.ftl',
-        'toolkit/toolkit/about/aboutProfiles.ftl',
-        'toolkit/toolkit/about/aboutRights.ftl',
-        'toolkit/toolkit/about/aboutServiceWorkers.ftl',
-        'toolkit/toolkit/about/aboutSupport.ftl',
-        'toolkit/toolkit/about/aboutTelemetry.ftl',
-        'toolkit/toolkit/about/certviewer.ftl',
-        'toolkit/toolkit/about/url-classifier.ftl',
-        'toolkit/toolkit/global/processTypes.ftl',
-        'toolkit/toolkit/pictureinpicture/pictureinpicture.ftl',
     ]
     source_files = [f for f in complete_source_files if f not in ignored_files]
 
@@ -173,7 +143,7 @@ def main():
         'missing': [],
         'incomplete': [],
     }
-    threshold = 70
+    threshold = int(args.threshold)
 
     files_total = 0
     out_log = []
