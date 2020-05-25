@@ -172,6 +172,14 @@ def main():
         for file_name in source_files:
             if file_name not in locale_files:
                 full_file_name = os.path.join(l10n_repo, file_name)
+                file_path = os.path.dirname(full_file_name)
+                if not os.path.isdir(file_path):
+                    # Create missing folder
+                    print('Creating missing folder: {}'.format(
+                        os.path.relpath(file_path, l10n_repo)
+                    ))
+                    os.makedirs(file_path)
+
                 with open(full_file_name, 'w') as f:
                     f.write(
                         '# This Source Code Form is subject to the terms of the Mozilla Public\n'
