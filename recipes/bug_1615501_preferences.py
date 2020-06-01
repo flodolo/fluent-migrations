@@ -69,15 +69,6 @@ remove-search-engine =
     .accesskey = { COPY(from_path, "removeSearchEngine.accesskey") }
 
 new-message-arrival = { COPY(from_path, "newMessagesArrive.label") }
-play-sound-label =
-    .label = { PLATFORM() ->
-        [macos] { COPY(from_path, "playSoundMac.label") }
-        *[other] { COPY(from_path, "playSound.label") }
-    }
-    .accesskey = { COPY(from_path, "playSound1.accesskey") }
-play-button =
-    .label = { COPY(from_path, "play.label") }
-    .accesskey = { COPY(from_path, "play.accesskey") }
 
 change-dock-icon = { COPY(from_path, "changeDockIconOptions.label") }
 app-icon-options =
@@ -97,12 +88,32 @@ tray-icon-label =
     .label = { COPY(from_path, "showTrayIcon.label") }
     .accesskey = { COPY(from_path, "showTrayIcon.accesskey") }
 
-custom-sound-label =
+mail-play-sound-label =
+    .label = { PLATFORM() ->
+        [macos] { COPY(from_path, "playSoundMac.label") }
+        *[other] { COPY(from_path, "playSound.label") }
+    }
+    .accesskey = { PLATFORM() ->
+        [macos] { COPY(from_path, "playSoundMac.accesskey") }
+        *[other] { COPY(from_path, "playSound1.accesskey") }
+    }
+
+mail-play-button =
+    .label = { COPY(from_path, "play.label") }
+    .accesskey = { COPY(from_path, "play.accesskey") }
+
+mail-system-sound-label =
+    .label = { COPY(from_path, "systemSound.label") }
+    .accesskey = { COPY(from_path, "systemSound.accesskey") }
+
+mail-custom-sound-label =
     .label = { COPY(from_path, "customsound.label") }
     .accesskey = { COPY(from_path, "customsound.accesskey") }
-browse-sound-label =
+
+mail-browse-sound-button =
     .label = { COPY(from_path, "browse.label") }
     .accesskey = { COPY(from_path, "browse.accesskey") }
+
 """, from_path="mail/chrome/messenger/preferences/general.dtd"
         )
     )
@@ -903,21 +914,6 @@ antivirus-label =
         "mail/messenger/preferences/preferences.ftl",
         transforms_from(
 """
-telemetry-legend = { COPY(from_path, "telemetrySection.label") }
-
-telemetry-label =
-    .label = { COPY(from_path, "enableTelemetry.label") }
-    .accesskey = { COPY(from_path, "enableTelemetry.accesskey") }
-
-learn-label =
-    .value = { COPY(from_path, "telemetryLearnMore.label") }
-
-crash-legend = { COPY(from_path, "crashReporterSection.label") }
-
-crash-label =
-    .label = { COPY(from_path, "enableCrashReporter.label") }
-    .accesskey = { COPY(from_path, "enableCrashReporter.accesskey") }
-
 certificate-description = { COPY(from_path, "certSelection.description") }
 
 certificate-auto =
@@ -941,35 +937,6 @@ security-devices-button =
     .accesskey = { COPY(from_path, "viewSecurityDevices2.accesskey") }
 """, from_path="mail/chrome/messenger/preferences/advanced.dtd"
         )
-    )
-
-    ctx.add_transforms(
-        "mail/messenger/preferences/preferences.ftl",
-        "mail/messenger/preferences/preferences.ftl",
-        [
-            FTL.Message(
-                id = FTL.Identifier("telemetry-description"),
-                value = REPLACE(
-                    "mail/chrome/messenger/preferences/advanced.dtd",
-                    "telemetryDesc.label",
-                    {
-                        "&brandShortName;": TERM_REFERENCE("brand-short-name"),
-                        "&vendorShortName;": TERM_REFERENCE("vendor-short-name")
-                    },
-                )
-            ),
-            FTL.Message(
-                id = FTL.Identifier("crash-description"),
-                value = REPLACE(
-                    "mail/chrome/messenger/preferences/advanced.dtd",
-                    "crashReporterDesc.label",
-                    {
-                        "&brandShortName;": TERM_REFERENCE("brand-short-name"),
-                        "&vendorShortName;": TERM_REFERENCE("vendor-short-name")
-                    },
-                )
-            ),
-        ]
     )
 
     ctx.add_transforms(
@@ -1020,23 +987,23 @@ notification-type-label =
         *[other] { COPY(from_path, "getAttention.accesskey") }
     }
 
-sound-label =
+chat-play-sound-label =
     .label = { COPY(from_path, "chatSound.label") }
     .accesskey = { COPY(from_path, "chatSound.accesskey") }
 
-play-button =
+chat-play-button =
     .label = { COPY(from_path, "play.label") }
     .accesskey = { COPY(from_path, "play.accesskey") }
 
-system-sound-label =
+chat-system-sound-label =
     .label = { COPY(from_path, "systemSound.label") }
     .accesskey = { COPY(from_path, "systemSound.accesskey") }
 
-custom-sound-label =
+chat-custom-sound-label =
     .label = { COPY(from_path, "customsound.label") }
     .accesskey = { COPY(from_path, "customsound.accesskey") }
 
-browse-sound-button =
+chat-browse-sound-button =
     .label = { COPY(from_path, "browse.label") }
     .accesskey = { COPY(from_path, "browse.accesskey") }
 
