@@ -10,6 +10,7 @@ Pass a version number like 65 to:
 import argparse
 import local_config
 import os
+import subprocess
 
 
 def main():
@@ -45,6 +46,16 @@ def main():
             # Remove the files from mozilla-unified
             os.remove(os.path.join(hg_path, recipe))
         print('\n'.join(output))
+
+        # Create hg bookmark and addremove files
+        subprocess.run([
+            'hg', '-R', mozilla_unified_path, 'bookmark',
+            'cleanrecipes_fx{}'.format(version_number)
+        ])
+        subprocess.run([
+            'hg', '-R', mozilla_unified_path, 'addremove'
+        ])
+
         # Print link to bug template
         encoded_output = [l.replace(' ', '%20') for l in output]
         print('\nBug template:\n')
