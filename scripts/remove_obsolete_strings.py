@@ -153,7 +153,7 @@ def main():
             ])
             subprocess.run([
                 'hg', '-R', locale_path, 'commit', '-m',
-                'Remove obsolete files and reformat files'
+                'Remove obsolete strings and reformat files'
             ])
             subprocess.run([
                 'hg', '-R', locale_path, 'push'
