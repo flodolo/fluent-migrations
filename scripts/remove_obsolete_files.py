@@ -44,7 +44,6 @@ def extractFileList(repository_path):
 
     supported_formats = [
         '.dtd',
-        '.inc',
         '.ini',
         '.properties',
     ]

@@ -95,7 +95,7 @@ def main():
             l10n_clones_path) if not x.startswith('.')]
         # Exclude locales still working on Mercurial directly
         excluded_locales = [
-            'it', 'ja', 'ja-JP-mac',
+            'ja', 'ja-JP-mac',
         ]
         locales = sorted([x for x in locales if x not in excluded_locales])
 
