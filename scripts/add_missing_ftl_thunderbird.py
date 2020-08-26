@@ -2,7 +2,7 @@
 
 '''
 This script is used to add missing FTL files to locales that are above
-a certain threshold of completion in Pontoon.
+a certain threshold of completion in Pontoon for Thunderbird.
 
 This is used to avoid falling back to English in the UI when a file in a
 Fluent bundle is missing.
@@ -10,9 +10,9 @@ Fluent bundle is missing.
 By default, the script runs on all locales, pulls from the repository but
 doesn't commit local changes. To commit:
 
-./add_missing_ftl.py --wetrun
+./add_missing_ftl_thunderbird.py --wetrun
 
-See "./add_missing_ftl.py --help" for other options.
+See "./add_missing_ftl_thunderbird.py --help" for other options.
 '''
 
 import argparse
@@ -27,27 +27,14 @@ from urllib.request import urlopen
 def extractFileList(repository_path):
     '''Extract the list of FTL files.'''
 
-    excluded_folders = (
-        '.hg',
-        'calendar',
-        'chat',
-        'editor',
-        'extensions',
-        'mail',
-        'other-licenses',
-        'suite',
-    )
-
     file_list = []
-    for root, dirs, files in os.walk(repository_path, followlinks=True):
-        # Ignore excluded folders
-        if root == repository_path:
-            dirs[:] = [d for d in dirs if d not in excluded_folders]
-
+    # Only check /mail
+    mail_path = os.path.join(repository_path, 'mail')
+    for root, dirs, files in os.walk(mail_path, followlinks=True):
         for file_name in files:
             if os.path.splitext(file_name)[1] == '.ftl':
                 file_name = os.path.relpath(
-                    os.path.join(root, file_name),
+                    os.path.join('mail', root, file_name),
                     repository_path
                 )
                 file_list.append(file_name)
@@ -96,22 +83,12 @@ def main():
             l10n_clones_path) if not x.startswith('.')])
 
     # Get a list of FTL files in the source repository
-    complete_source_files = extractFileList(quarantine_path)
-
-    # Manual list of stand-alone files that's not useful to add
-    ignored_files = [
-        'devtools/client/aboutdebugging.ftl',
-        'devtools/client/accessibility.ftl',
-        'devtools/client/application.ftl',
-        'devtools/client/tooltips.ftl',
-        'devtools/startup/aboutDevTools.ftl',
-    ]
-    source_files = [f for f in complete_source_files if f not in ignored_files]
+    source_files = extractFileList(quarantine_path)
 
     # Get completion stats for locales from Pontoon
     query = '''
 {
-  firefox: project(slug: "firefox") {
+  firefox: project(slug: "thunderbird") {
     localizations {
         locale {
             code
