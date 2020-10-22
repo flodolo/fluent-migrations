@@ -48,10 +48,10 @@ def main():
         print('\n'.join(output))
 
         # Create hg bookmark and addremove files
-        subprocess.run([
-            'hg', '-R', mozilla_unified_path, 'bookmark',
-            'cleanrecipes_fx{}'.format(version_number)
-        ])
+        #subprocess.run([
+        #    'hg', '-R', mozilla_unified_path, 'bookmark',
+        #    'cleanrecipes_fx{}'.format(version_number)
+        #])
         subprocess.run([
             'hg', '-R', mozilla_unified_path, 'addremove'
         ])
