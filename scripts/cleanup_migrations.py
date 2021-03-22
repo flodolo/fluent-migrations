@@ -25,12 +25,16 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('version_number', help='Version number, e.g. 65')
+    parser.add_argument(
+        '--bookmark',
+        help='Create bookmark in mozilla-unified',
+        action='store_true'
+    )
     args = parser.parse_args()
 
     # Get the list of recipes
-    recipes_path = os.path.join(root_folder, 'recipes', 'fx{}')
     version_number = args.version_number
-    recipes_path = recipes_path.format(version_number)
+    recipes_path = os.path.join(root_folder, 'recipes', f'fx{version_number}')
     hg_path = os.path.join(
         mozilla_unified_path, 'python', 'l10n', 'fluent_migrations')
 
@@ -40,18 +44,24 @@ def main():
     try:
         recipes.sort()
         output = []
-        output.append('Affected bugs:')
+        output.append(f'Affected bugs ({version_number}):')
         for recipe in recipes:
-            output.append('- Bug {}'.format(recipe.split('_')[1]))
             # Remove the files from mozilla-unified
-            os.remove(os.path.join(hg_path, recipe))
+            try:
+                recipe_path = os.path.join(hg_path, recipe)
+                os.remove(recipe_path)
+                output.append('- Bug {}'.format(recipe.split('_')[1]))
+            except:
+                print(f"File {recipe_path} doesn't exist")
+
         print('\n'.join(output))
 
-        # Create hg bookmark and addremove files
-        #subprocess.run([
-        #    'hg', '-R', mozilla_unified_path, 'bookmark',
-        #    'cleanrecipes_fx{}'.format(version_number)
-        #])
+        if args.bookmark:
+            # Create hg bookmark and addremove files
+            subprocess.run([
+                'hg', '-R', mozilla_unified_path, 'bookmark',
+                f'cleanrecipes_fx{version_number}'
+            ])
         subprocess.run([
             'hg', '-R', mozilla_unified_path, 'addremove'
         ])
