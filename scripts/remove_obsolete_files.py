@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-'''
+"""
 
 This script is used to remove:
 - Obsolete files (available in the locale but not in quarantine).
@@ -16,7 +16,7 @@ doesn't commit local changes. To commit:
 
 See "./remove_obsolete_files.py --help" for other options.
 
-'''
+"""
 
 from compare_locales import parser
 import argparse
@@ -26,38 +26,35 @@ import subprocess
 
 
 def extractFileList(repository_path):
-    '''
-        Extract the list of supported files. Store the relative path and ignore
-        specific paths.
-    '''
+    """
+    Extract the list of supported files. Store the relative path and ignore
+    specific paths.
+    """
 
     excluded_paths = (
-        'dom/chrome/netErrorApp.dtd',
-        'extensions/irc/',
-        'other-licenses/branding/sunbird/',
-        'suite/',
+        "dom/chrome/netErrorApp.dtd",
+        "extensions/irc/",
+        "other-licenses/branding/sunbird/",
+        "suite/",
     )
 
-    excluded_files = (
-        'region.properties',
-    )
+    excluded_files = ("region.properties",)
 
     supported_formats = [
-        '.dtd',
-        '.ini',
-        '.properties',
+        ".dtd",
+        ".ini",
+        ".properties",
     ]
 
     file_list = []
     for root, dirs, files in os.walk(repository_path, followlinks=True):
         # Exclude hidden folders and files
-        files = [f for f in files if not f[0] == '.']
-        dirs[:] = [d for d in dirs if not d[0] == '.']
+        files = [f for f in files if not f[0] == "."]
+        dirs[:] = [d for d in dirs if not d[0] == "."]
         for filename in files:
             if os.path.splitext(filename)[1] in supported_formats:
                 filename = os.path.relpath(
-                    os.path.join(root, filename),
-                    repository_path
+                    os.path.join(root, filename), repository_path
                 )
                 # Ignore excluded folders
                 if filename.startswith(excluded_paths):
@@ -72,9 +69,9 @@ def extractFileList(repository_path):
 
 
 def findEmptyFiles(repository_path):
-    '''
-        Find empty files
-    '''
+    """
+    Find empty files
+    """
 
     empty_files_list = []
     file_list = extractFileList(repository_path)
@@ -94,7 +91,7 @@ def findEmptyFiles(repository_path):
             if empty_file:
                 empty_files_list.append(file_path)
         except Exception as e:
-            print('Error parsing file: {}'.format(file_path))
+            print("Error parsing file: {}".format(file_path))
             print(e)
 
     return empty_files_list
@@ -102,51 +99,45 @@ def findEmptyFiles(repository_path):
 
 def main():
     p = argparse.ArgumentParser(
-        description='Remove obsolete and empty files in localized repositories')
+        description="Remove obsolete and empty files in localized repositories"
+    )
 
+    p.add_argument("--noupdates", help="Do not pull from remote", action="store_true")
     p.add_argument(
-        '--noupdates',
-        help='Do not pull from remote',
-        action='store_true'
+        "--wetrun",
+        help="Commit local changes and push them to remote",
+        action="store_true",
     )
     p.add_argument(
-        '--wetrun',
-        help='Commit local changes and push them to remote',
-        action='store_true'
-    )
-    p.add_argument(
-        '--locale',
-        help='Run on a specific locale',
-        action='store',
-        default=''
+        "--locale", help="Run on a specific locale", action="store", default=""
     )
     args = p.parse_args()
 
     # Read paths from config file
     [l10n_clones_path, quarantine_path] = local_config.read_config(
-        ['l10n_clones_path', 'quarantine_path'])
+        ["l10n_clones_path", "quarantine_path"]
+    )
 
     # Get the list of locales
     if args.locale:
         locales = [args.locale]
     else:
-        locales = sorted([x for x in os.listdir(
-            l10n_clones_path) if not x.startswith('.')])
+        locales = sorted(
+            [x for x in os.listdir(l10n_clones_path) if not x.startswith(".")]
+        )
 
     # Store the list of files in quarantine
     source_file_list = extractFileList(quarantine_path)
 
     for locale in locales:
-        print('Locale: {}'.format(locale))
+        print("Locale: {}".format(locale))
         need_commit = False
         locale_path = os.path.join(l10n_clones_path, locale)
 
         # Update locale repository, unless --noupdates was called explicitly
         if not args.noupdates:
-            print('Updating repository...')
-            subprocess.run([
-                'hg', '-R', locale_path, 'pull', '-u'
-            ])
+            print("Updating repository...")
+            subprocess.run(["hg", "-R", locale_path, "pull", "-u"])
 
         target_file_list = extractFileList(locale_path)
 
@@ -161,8 +152,8 @@ def main():
 
         obsolete_files_list.sort()
         if obsolete_files_list:
-            print('Obsolete files:')
-            print('\n'.join(obsolete_files_list))
+            print("Obsolete files:")
+            print("\n".join(obsolete_files_list))
 
         # Find files containing no strings
         empty_files_list = []
@@ -172,25 +163,27 @@ def main():
                 for filename in empty_files_list:
                     os.remove(os.path.join(locale_path, filename))
                 need_commit = True
-            print('Empty files:')
-            print('\n'.join(empty_files_list))
+            print("Empty files:")
+            print("\n".join(empty_files_list))
 
         if args.wetrun:
             if need_commit:
                 # Commit changes
-                subprocess.run([
-                    'hg', '-R', locale_path, 'addremove'
-                ])
-                subprocess.run([
-                    'hg', '-R', locale_path, 'commit', '-m',
-                    'Bug 1443175 - Remove obsolete and empty files'
-                ])
-                subprocess.run([
-                    'hg', '-R', locale_path, 'push'
-                ])
+                subprocess.run(["hg", "-R", locale_path, "addremove"])
+                subprocess.run(
+                    [
+                        "hg",
+                        "-R",
+                        locale_path,
+                        "commit",
+                        "-m",
+                        "Bug 1443175 - Remove obsolete and empty files",
+                    ]
+                )
+                subprocess.run(["hg", "-R", locale_path, "push"])
         else:
-            print('(dry run)')
+            print("(dry run)")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
