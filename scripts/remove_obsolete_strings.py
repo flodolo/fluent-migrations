@@ -41,7 +41,6 @@ def extractFileList(repository_path):
         "editor",
         "extensions",
         "other-licenses",
-        "suite",
     )
 
     file_list = []

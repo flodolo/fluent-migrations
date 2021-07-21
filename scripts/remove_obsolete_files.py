@@ -35,7 +35,6 @@ def extractFileList(repository_path):
         "dom/chrome/netErrorApp.dtd",
         "extensions/irc/",
         "other-licenses/branding/sunbird/",
-        "suite/",
     )
 
     excluded_files = ("region.properties",)
