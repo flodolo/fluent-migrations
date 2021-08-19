@@ -28,15 +28,16 @@ def extractFileList(repository_path):
     """Extract the list of FTL files."""
 
     file_list = []
-    # Only check /mail
-    mail_path = os.path.join(repository_path, "mail")
-    for root, dirs, files in os.walk(mail_path, followlinks=True):
-        for file_name in files:
-            if os.path.splitext(file_name)[1] == ".ftl":
-                file_name = os.path.relpath(
-                    os.path.join("mail", root, file_name), repository_path
-                )
-                file_list.append(file_name)
+    # Only check /mail and /calendar
+    for d in ["mail", "calendar"]:
+        folder_path = os.path.join(repository_path, d)
+        for root, dirs, files in os.walk(folder_path, followlinks=True):
+            for file_name in files:
+                if os.path.splitext(file_name)[1] == ".ftl":
+                    file_name = os.path.relpath(
+                        os.path.join(d, root, file_name), repository_path
+                    )
+                    file_list.append(file_name)
     file_list.sort()
 
     return file_list
