@@ -43,6 +43,8 @@ def extractFileList(repository_path):
         "other-licenses",
     )
 
+    excluded_files = ("region.properties",)
+
     file_list = []
     for root, dirs, files in os.walk(repository_path, followlinks=True):
         # Ignore excluded folders
@@ -50,7 +52,10 @@ def extractFileList(repository_path):
             dirs[:] = [d for d in dirs if d not in excluded_folders]
 
         for filename in files:
-            if os.path.splitext(filename)[1] in supported_formats:
+            if (
+                os.path.splitext(filename)[1] in supported_formats
+                and filename not in excluded_files
+            ):
                 filename = os.path.relpath(
                     os.path.join(root, filename), repository_path
                 )
