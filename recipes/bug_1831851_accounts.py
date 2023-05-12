@@ -60,26 +60,6 @@ def migrate(ctx):
                 value=COPY(accounts, "sendTabToDevice.verify"),
             ),
             FTL.Message(
-                id=FTL.Identifier("account-connection-title"),
-                value=FTL.Pattern(
-                    [
-                        FTL.Placeable(
-                            FTL.TermReference(
-                                id=FTL.Identifier("fxaccount-brand-name"),
-                                arguments=FTL.CallArguments(
-                                    named=[
-                                        FTL.NamedArgument(
-                                            FTL.Identifier("capitalization"),
-                                            FTL.StringLiteral("title"),
-                                        )
-                                    ]
-                                ),
-                            )
-                        )
-                    ]
-                ),
-            ),
-            FTL.Message(
                 id=FTL.Identifier("account-connection-connected-with"),
                 value=REPLACE(
                     accounts,
