@@ -32,15 +32,13 @@ def extractFileList(repository_path):
     """
 
     excluded_paths = (
-        "dom/chrome/netErrorApp.dtd",
         "extensions/irc/",
         "other-licenses/branding/sunbird/",
     )
 
-    excluded_files = ("region.properties",)
-
     supported_formats = [
         ".dtd",
+        ".inc",
         ".ini",
         ".properties",
     ]
