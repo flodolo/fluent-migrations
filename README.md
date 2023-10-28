@@ -38,7 +38,7 @@ of Firefox, and remove them from a local `mozilla-unified` clone.
 The `no_train` folder is used for recipes that never landed in
 `mozilla-central`.
 
-## Command Line Options
+## Command line options
 
 To dry-run all locales use:
 
@@ -59,3 +59,29 @@ $ ./scripts/migration.sh wet-run push
 ```
 
 Run `./scripts/migration.sh help` for help on all available command line options.
+
+## Removing obsolete recipes from mozilla-central
+
+Obsolete migration recipes need to be periodically removed from
+`mozilla-central`. The script `cleanup_migrations.py` can be used for this
+purpose.
+
+For example, if you want to remove recipes for version 113, you can run this
+command:
+
+```
+./scripts/cleanup_migrations.py 113 --bookmark
+```
+
+This will:
+* Create a bookmark (`cleanrecipes_fx113`) in the `mozilla-unified` local clone.
+* Check the recipes that are stored inside the `fx113` folder, and remove them
+  from `mozilla-unified`.
+* Provide a link to file the bug.
+
+If you want to remove other versions in the same bug, you can run the command
+without the `--bookmark` flag, and manually update the bug content with the text
+printed in the console.
+
+Once the bug is filed, move the corresponding fx folders (e.g. `fx113`) into the
+`archive` folder.
