@@ -13,7 +13,8 @@ $ source venv/bin/activate
 $ pip install mercurial python-hglib fluent.migrate
 ```
 
-2. Clone [gecko-strings-quarantine](https://hg.mozilla.org/users/axel_mozilla.com/gecko-strings-quarantine).
+2. Clone [firefox-l10n-source](https://github.com/mozilla-l10n/firefox-l10n-source)
+and switch to the `update` branch.
 
 3. Clone all l10n repositories on your system. You can use [these
 scripts](https://github.com/flodolo/scripts/tree/master/mozilla_l10n/clone_hgmo)
