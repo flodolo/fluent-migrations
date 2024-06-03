@@ -82,14 +82,20 @@ def main():
     args = p.parse_args()
 
     # Read paths from config file
-    [l10n_clones_path, quarantine_path] = local_config.read_config(
-        ["l10n_clones_path", "quarantine_path"]
+    [l10n_path, quarantine_path] = local_config.read_config(
+        ["l10n_path", "quarantine_path"]
     )
 
     if args.locale:
         locales = [args.locale]
     else:
-        locales = [x for x in os.listdir(l10n_clones_path) if not x.startswith(".")]
+        locales = sorted(
+            [
+                x
+                for x in os.listdir(l10n_path)
+                if os.path.isdir(os.path.join(l10n_path, x)) and not x.startswith(".")
+            ]
+        )
         # Exclude locales still working on Mercurial directly
         excluded_locales = [
             "ja",
@@ -100,14 +106,14 @@ def main():
     # Get a list of supported files in the source repository
     source_file_list = extractFileList(quarantine_path)
 
+    # Update l10n repository, unless --noupdates was called explicitly
+    if not args.noupdates:
+        print("Updating repository...")
+        subprocess.run(["git", "-C", l10n_path, "pull"])
+
     for locale in locales:
         print("Locale: {}".format(locale))
-        locale_path = os.path.join(l10n_clones_path, locale)
-
-        # Update locale repository, unless --noupdates was called explicitly
-        if not args.noupdates:
-            print("Updating repository...")
-            subprocess.run(["hg", "-R", locale_path, "pull", "-u"])
+        locale_path = os.path.join(l10n_path, locale)
 
         # Create list of target files
         target_file_list = extractFileList(locale_path)
@@ -148,20 +154,22 @@ def main():
 
         if args.wetrun:
             # Commit changes
-            subprocess.run(["hg", "-R", locale_path, "addremove"])
+            subprocess.run(["git", "-C", l10n_path, "add", locale])
             subprocess.run(
                 [
-                    "hg",
-                    "-R",
-                    locale_path,
+                    "git",
+                    "-C",
+                    l10n_path,
                     "commit",
                     "-m",
                     "Remove obsolete strings and reformat files",
                 ]
             )
-            subprocess.run(["hg", "-R", locale_path, "push"])
         else:
             print("(dry run)")
+
+    if args.wetrun:
+        subprocess.run(["git", "-C", l10n_path, "push"])
 
 
 if __name__ == "__main__":

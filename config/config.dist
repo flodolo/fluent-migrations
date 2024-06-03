@@ -1,7 +1,8 @@
 # This config is imported in a bash script via source.
 
-# Path to folder including all l10n clones
-l10n_clones_path="/path/to/l10n-clones/"
+# Path to firefox-l10n clone
+# https://github.com/mozilla-l10n/firefox-l10n
+l10n_path="/path/to/l10n-git-monorepo/"
 
 # Path to firefox-l10n-source clone, with the `update` branch checked-out
 # https://github.com/mozilla-l10n/firefox-l10n-source
