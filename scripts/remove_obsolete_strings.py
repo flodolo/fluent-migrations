@@ -49,10 +49,7 @@ def extractFileList(repository_path):
             dirs[:] = [d for d in dirs if d not in excluded_folders]
 
         for filename in files:
-            if (
-                os.path.splitext(filename)[1] in supported_formats
-                and filename not in excluded_files
-            ):
+            if (os.path.splitext(filename)[1] in supported_formats):
                 filename = os.path.relpath(
                     os.path.join(root, filename), repository_path
                 )
