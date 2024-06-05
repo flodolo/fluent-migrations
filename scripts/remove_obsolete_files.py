@@ -19,6 +19,7 @@ See "./remove_obsolete_files.py --help" for other options.
 """
 
 from compare_locales import parser
+from functions import get_locale_folders
 import argparse
 import local_config
 import os
@@ -113,16 +114,7 @@ def main():
     )
 
     # Get the list of locales
-    if args.locale:
-        locales = [args.locale]
-    else:
-        locales = sorted(
-            [
-                x
-                for x in os.listdir(l10n_path)
-                if os.path.isdir(os.path.join(l10n_path, x)) and not x.startswith(".")
-            ]
-        )
+    locales = [args.locale] if args.locale else get_locale_folders(l10n_path)
 
     # Store the list of files in quarantine
     source_file_list = extractFileList(quarantine_path)

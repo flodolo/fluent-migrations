@@ -15,13 +15,14 @@ doesn't commit local changes. To commit:
 See "./add_missing_ftl_thunderbird.py --help" for other options.
 """
 
+from functions import get_locale_folders
+from urllib.parse import quote as urlquote
+from urllib.request import urlopen
 import argparse
 import json
 import local_config
 import os
 import subprocess
-from urllib.parse import quote as urlquote
-from urllib.request import urlopen
 
 
 def extractFileList(repository_path):
@@ -71,16 +72,7 @@ def main():
     )
 
     # Get the list of locales
-    if args.locale:
-        locales = [args.locale]
-    else:
-        locales = sorted(
-            [
-                x
-                for x in os.listdir(l10n_path)
-                if os.path.isdir(os.path.join(l10n_path, x)) and not x.startswith(".")
-            ]
-        )
+    locales = [args.locale] if args.locale else get_locale_folders(l10n_path)
 
     # Get a list of FTL files in the source repository
     source_files = extractFileList(quarantine_path)

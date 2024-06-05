@@ -20,6 +20,7 @@ import argparse
 import local_config
 import os
 import subprocess
+from functions import get_locale_folders
 
 
 def extractFileList(repository_path):
@@ -35,15 +36,9 @@ def extractFileList(repository_path):
     ]
 
     excluded_folders = (
-        ".hg",
-        "calendar",
-        "chat",
-        "editor",
+        ".git",
         "extensions",
-        "other-licenses",
     )
-
-    excluded_files = ("region.properties",)
 
     file_list = []
     for root, dirs, files in os.walk(repository_path, followlinks=True):
@@ -86,22 +81,13 @@ def main():
         ["l10n_path", "quarantine_path"]
     )
 
-    if args.locale:
-        locales = [args.locale]
-    else:
-        locales = sorted(
-            [
-                x
-                for x in os.listdir(l10n_path)
-                if os.path.isdir(os.path.join(l10n_path, x)) and not x.startswith(".")
-            ]
-        )
-        # Exclude locales still working on Mercurial directly
-        excluded_locales = [
-            "ja",
-            "ja-JP-mac",
-        ]
-        locales = sorted([x for x in locales if x not in excluded_locales])
+    locales = [args.locale] if args.locale else get_locale_folders(l10n_path)
+    # Exclude locales still working on Mercurial directly
+    excluded_locales = [
+        "ja",
+        "ja-JP-mac",
+    ]
+    locales = sorted([x for x in locales if x not in excluded_locales])
 
     # Get a list of supported files in the source repository
     source_file_list = extractFileList(quarantine_path)
