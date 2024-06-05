@@ -18,12 +18,14 @@ See "./remove_obsolete_files.py --help" for other options.
 
 """
 
-from compare_locales import parser
-from functions import get_locale_folders
 import argparse
-import local_config
 import os
 import subprocess
+
+import local_config
+
+from compare_locales import parser
+from functions import get_locale_folders
 
 
 def extractFileList(repository_path):

@@ -1,5 +1,6 @@
 import os
 
+
 def get_locale_folders(path):
     return sorted(
         [

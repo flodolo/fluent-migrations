@@ -15,14 +15,17 @@ doesn't commit local changes. To commit:
 See "./add_missing_ftl.py --help" for other options.
 """
 
-from functions import get_locale_folders
-from urllib.parse import quote as urlquote
-from urllib.request import urlopen
 import argparse
 import json
-import local_config
 import os
 import subprocess
+
+from urllib.parse import quote as urlquote
+from urllib.request import urlopen
+
+import local_config
+
+from functions import get_locale_folders
 
 
 def extractFileList(repository_path):

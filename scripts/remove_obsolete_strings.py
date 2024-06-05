@@ -14,12 +14,14 @@ See "./remove_obsolete_strings.py --help" for other options.
 
 """
 
-from compare_locales.parser import getParser
-from compare_locales.serializer import serialize
 import argparse
-import local_config
 import os
 import subprocess
+
+import local_config
+
+from compare_locales.parser import getParser
+from compare_locales.serializer import serialize
 from functions import get_locale_folders
 
 
