@@ -1,7 +1,7 @@
 # Fluent Migrations
 
-This repository stores a copy of each migration module created for Gecko
-strings, and a script to run the migrations.
+This repository stores a copy of each migration module created for
+`mozilla-central`, and a script to run the migrations.
 
 ## Set up the system
 
@@ -16,9 +16,7 @@ $ pip install mercurial python-hglib fluent.migrate
 2. Clone [firefox-l10n-source](https://github.com/mozilla-l10n/firefox-l10n-source)
 and switch to the `update` branch.
 
-3. Clone all l10n repositories on your system. You can use [these
-scripts](https://github.com/flodolo/scripts/tree/master/mozilla_l10n/clone_hgmo)
-to automate the process.
+3. Clone [firefox-l10n](https://github.com/mozilla-l10n/firefox-l10n-source).
 
 4. Copy `config/config.dist` as `config`, and adapt the paths to your system.
 
@@ -58,6 +56,11 @@ For running migrations on all locales and push to repository, use:
 ```
 $ ./scripts/migration.sh wet-run push
 ```
+
+> [!CAUTION]
+> The script assumes your locale clone of `firefox-l10n` is already on the
+> correct branch, and that the value of `push.default` in Git's configuration
+> allows to push without an explicit remote or branch.
 
 Run `./scripts/migration.sh help` for help on all available command line options.
 
