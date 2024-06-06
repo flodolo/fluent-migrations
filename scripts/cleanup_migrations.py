@@ -8,9 +8,10 @@ Pass a version number like 65 to:
 """
 
 import argparse
-import local_config
 import os
 import subprocess
+
+import local_config
 
 
 def main():
@@ -47,7 +48,7 @@ def main():
                 recipe_path = os.path.join(hg_path, recipe)
                 os.remove(recipe_path)
                 output.append("- Bug {}".format(recipe.split("_")[1]))
-            except:
+            except FileNotFoundError:
                 print(f"File {recipe_path} doesn't exist")
 
         print("\n".join(output))
@@ -66,7 +67,7 @@ def main():
         subprocess.run(["hg", "-R", mozilla_unified_path, "addremove"])
 
         # Print link to bug template
-        encoded_output = [l.replace(" ", "%20") for l in output]
+        encoded_output = [line.replace(" ", "%20") for line in output]
         print("\nBug template:\n")
         print(
             bug_template.format(

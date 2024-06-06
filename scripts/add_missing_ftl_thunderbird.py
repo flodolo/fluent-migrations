@@ -17,11 +17,15 @@ See "./add_missing_ftl_thunderbird.py --help" for other options.
 
 import argparse
 import json
-import local_config
 import os
 import subprocess
+
 from urllib.parse import quote as urlquote
 from urllib.request import urlopen
+
+import local_config
+
+from functions import get_locale_folders
 
 
 def extractFileList(repository_path):
@@ -66,17 +70,12 @@ def main():
     args = p.parse_args()
 
     # Read paths from config file
-    [l10n_clones_path, quarantine_path] = local_config.read_config(
-        ["l10n_clones_path", "quarantine_path"]
+    [l10n_path, quarantine_path] = local_config.read_config(
+        ["l10n_path", "quarantine_path"]
     )
 
     # Get the list of locales
-    if args.locale:
-        locales = [args.locale]
-    else:
-        locales = sorted(
-            [x for x in os.listdir(l10n_clones_path) if not x.startswith(".")]
-        )
+    locales = [args.locale] if args.locale else get_locale_folders(l10n_path)
 
     # Get a list of FTL files in the source repository
     source_files = extractFileList(quarantine_path)
@@ -133,6 +132,10 @@ def main():
         )
         pontoon_stats[requested_locale] = 100
 
+    # Update l10n repository, unless --noupdates was called explicitly
+    if not args.noupdates:
+        subprocess.run(["git", "-C", l10n_path, "pull"])
+
     for locale in locales:
         # Ignore a locale if it's not in Pontoon or is below 60%
         if locale not in pontoon_stats and locale not in ["ja-JP-mac"]:
@@ -143,11 +146,7 @@ def main():
             ignored_locales["incomplete"].append(locale)
             continue
 
-        l10n_repo = os.path.join(l10n_clones_path, locale)
-
-        # Update locale repository, unless --noupdates was called explicitly
-        if not args.noupdates:
-            subprocess.run(["hg", "-R", l10n_repo, "pull", "-u"])
+        l10n_repo = os.path.join(l10n_path, locale)
 
         # Create list of files
         locale_files = extractFileList(l10n_repo)
@@ -178,20 +177,21 @@ def main():
             out_log.append("{}: added {} files".format(locale, added_files))
             files_total += added_files
             if args.wetrun:
-                subprocess.run(["hg", "-R", l10n_repo, "addremove"])
+                subprocess.run(["git", "-C", l10n_path, "add", locale])
                 subprocess.run(
                     [
-                        "hg",
-                        "-R",
-                        l10n_repo,
+                        "git",
+                        "-C",
+                        l10n_path,
                         "commit",
                         "-m",
                         "Bug 1586984 - Add empty FTL files to repository to avoid English fallback",
                     ]
                 )
-                subprocess.run(["hg", "-R", l10n_repo, "push"])
 
-    if not args.wetrun:
+    if args.wetrun:
+        subprocess.run(["git", "-C", l10n_path, "push"])
+    else:
         print("*** DRY RUN ***")
     print("Total files added: {}".format(files_total))
     print("\n".join(out_log))

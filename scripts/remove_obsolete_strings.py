@@ -14,12 +14,15 @@ See "./remove_obsolete_strings.py --help" for other options.
 
 """
 
-from compare_locales.parser import getParser
-from compare_locales.serializer import serialize
 import argparse
-import local_config
 import os
 import subprocess
+
+import local_config
+
+from compare_locales.parser import getParser
+from compare_locales.serializer import serialize
+from functions import get_locale_folders
 
 
 def extractFileList(repository_path):
@@ -35,15 +38,9 @@ def extractFileList(repository_path):
     ]
 
     excluded_folders = (
-        ".hg",
-        "calendar",
-        "chat",
-        "editor",
+        ".git",
         "extensions",
-        "other-licenses",
     )
-
-    excluded_files = ("region.properties",)
 
     file_list = []
     for root, dirs, files in os.walk(repository_path, followlinks=True):
@@ -52,10 +49,7 @@ def extractFileList(repository_path):
             dirs[:] = [d for d in dirs if d not in excluded_folders]
 
         for filename in files:
-            if (
-                os.path.splitext(filename)[1] in supported_formats
-                and filename not in excluded_files
-            ):
+            if (os.path.splitext(filename)[1] in supported_formats):
                 filename = os.path.relpath(
                     os.path.join(root, filename), repository_path
                 )
@@ -82,32 +76,29 @@ def main():
     args = p.parse_args()
 
     # Read paths from config file
-    [l10n_clones_path, quarantine_path] = local_config.read_config(
-        ["l10n_clones_path", "quarantine_path"]
+    [l10n_path, quarantine_path] = local_config.read_config(
+        ["l10n_path", "quarantine_path"]
     )
 
-    if args.locale:
-        locales = [args.locale]
-    else:
-        locales = [x for x in os.listdir(l10n_clones_path) if not x.startswith(".")]
-        # Exclude locales still working on Mercurial directly
-        excluded_locales = [
-            "ja",
-            "ja-JP-mac",
-        ]
-        locales = sorted([x for x in locales if x not in excluded_locales])
+    locales = [args.locale] if args.locale else get_locale_folders(l10n_path)
+    # Exclude locales still working on Mercurial directly
+    excluded_locales = [
+        "ja",
+        "ja-JP-mac",
+    ]
+    locales = sorted([x for x in locales if x not in excluded_locales])
 
     # Get a list of supported files in the source repository
     source_file_list = extractFileList(quarantine_path)
 
+    # Update l10n repository, unless --noupdates was called explicitly
+    if not args.noupdates:
+        print("Updating repository...")
+        subprocess.run(["git", "-C", l10n_path, "pull"])
+
     for locale in locales:
         print("Locale: {}".format(locale))
-        locale_path = os.path.join(l10n_clones_path, locale)
-
-        # Update locale repository, unless --noupdates was called explicitly
-        if not args.noupdates:
-            print("Updating repository...")
-            subprocess.run(["hg", "-R", locale_path, "pull", "-u"])
+        locale_path = os.path.join(l10n_path, locale)
 
         # Create list of target files
         target_file_list = extractFileList(locale_path)
@@ -148,20 +139,22 @@ def main():
 
         if args.wetrun:
             # Commit changes
-            subprocess.run(["hg", "-R", locale_path, "addremove"])
+            subprocess.run(["git", "-C", l10n_path, "add", locale])
             subprocess.run(
                 [
-                    "hg",
-                    "-R",
-                    locale_path,
+                    "git",
+                    "-C",
+                    l10n_path,
                     "commit",
                     "-m",
                     "Remove obsolete strings and reformat files",
                 ]
             )
-            subprocess.run(["hg", "-R", locale_path, "push"])
         else:
             print("(dry run)")
+
+    if args.wetrun:
+        subprocess.run(["git", "-C", l10n_path, "push"])
 
 
 if __name__ == "__main__":
