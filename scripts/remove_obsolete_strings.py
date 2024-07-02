@@ -8,13 +8,14 @@ to the source content (en-US).
 By default, the script runs on all locales, pulls from the repository but
 doesn't commit local changes. To commit:
 
-./remove_obsolete_strings.py --wetrun
+./remove_obsolete_strings.py --wet-run
+
+To commit and push use --push instead of --wet-run.
 
 See "./remove_obsolete_strings.py --help" for other options.
 
 """
 
-import argparse
 import os
 import subprocess
 
@@ -22,7 +23,7 @@ import local_config
 
 from compare_locales.parser import getParser
 from compare_locales.serializer import serialize
-from functions import get_locale_folders
+from functions import get_locale_folders, get_cli_params
 
 
 def extractFileList(repository_path):
@@ -49,7 +50,7 @@ def extractFileList(repository_path):
             dirs[:] = [d for d in dirs if d not in excluded_folders]
 
         for filename in files:
-            if (os.path.splitext(filename)[1] in supported_formats):
+            if os.path.splitext(filename)[1] in supported_formats:
                 filename = os.path.relpath(
                     os.path.join(root, filename), repository_path
                 )
@@ -60,20 +61,12 @@ def extractFileList(repository_path):
 
 
 def main():
-    p = argparse.ArgumentParser(
-        description="Remove obsolete strings and reformat files in localized repositories"
+    args = get_cli_params(
+        cmd_desc="Remove obsolete strings and reformat files in localized repositories",
+        threshold=False,
     )
-
-    p.add_argument("--noupdates", help="Do not pull from remote", action="store_true")
-    p.add_argument(
-        "--wetrun",
-        help="Commit local changes and push them to remote",
-        action="store_true",
-    )
-    p.add_argument(
-        "--locale", help="Run on a specific locale", action="store", default=""
-    )
-    args = p.parse_args()
+    # Commit changes for both --wet-run and --push
+    commit_changes = args.wetrun or args.push
 
     # Read paths from config file
     [l10n_path, quarantine_path] = local_config.read_config(
@@ -137,7 +130,7 @@ def main():
             with open(target_filename, "wb") as f:
                 f.write(output)
 
-        if args.wetrun:
+        if commit_changes:
             # Commit changes
             subprocess.run(["git", "-C", l10n_path, "add", locale])
             subprocess.run(
@@ -153,7 +146,7 @@ def main():
         else:
             print("(dry run)")
 
-    if args.wetrun:
+    if args.push:
         subprocess.run(["git", "-C", l10n_path, "push"])
 
 

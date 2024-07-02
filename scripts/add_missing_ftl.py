@@ -10,12 +10,13 @@ Fluent bundle is missing.
 By default, the script runs on all locales, pulls from the repository but
 doesn't commit local changes. To commit:
 
-./add_missing_ftl.py --wetrun
+./add_missing_ftl.py --wet-run
+
+To commit and push use --push instead of --wet-run.
 
 See "./add_missing_ftl.py --help" for other options.
 """
 
-import argparse
 import json
 import os
 import subprocess
@@ -25,7 +26,7 @@ from urllib.request import urlopen
 
 import local_config
 
-from functions import get_locale_folders
+from functions import get_locale_folders, get_cli_params
 
 
 def extractFileList(repository_path):
@@ -60,26 +61,9 @@ def extractFileList(repository_path):
 
 
 def main():
-    p = argparse.ArgumentParser(
-        description="Add missing FTL files in localized repositories"
+    args = get_cli_params(
+        cmd_desc="Add missing FTL files in localized repositories", threshold=True
     )
-
-    p.add_argument("--noupdates", help="Do not pull from remote", action="store_true")
-    p.add_argument(
-        "--wetrun",
-        help="Commit local changes and push them to remote",
-        action="store_true",
-    )
-    p.add_argument(
-        "--locale", help="Run on a specific locale", action="store", default=""
-    )
-    p.add_argument(
-        "--threshold",
-        help="Minimum percentage of completion in completion under which locales are ignored",
-        action="store",
-        default="70",
-    )
-    args = p.parse_args()
 
     # Read paths from config file
     [l10n_path, quarantine_path] = local_config.read_config(
@@ -198,7 +182,7 @@ def main():
         if added_files > 0:
             out_log.append("{}: added {} files".format(locale, added_files))
             files_total += added_files
-            if args.wetrun:
+            if args.wetrun or args.push:
                 subprocess.run(["git", "-C", l10n_path, "add", locale])
                 subprocess.run(
                     [
@@ -211,7 +195,7 @@ def main():
                     ]
                 )
 
-    if args.wetrun:
+    if args.push:
         subprocess.run(["git", "-C", l10n_path, "push"])
     else:
         print("*** DRY RUN ***")
