@@ -1,17 +1,12 @@
 # Fluent Migrations
 
 This repository stores a copy of each migration module created for
-`mozilla-central`, and a script to run the migrations.
+`mozilla-central`, a script to run the migrations, and other support scripts.
 
 ## Set up the system
 
-1. Create a virtual environment and install dependencies:
-
-```bash
-$ virtualenv venv
-$ source venv/bin/activate
-$ pip install mercurial python-hglib fluent.migrate
-```
+1. Make sure that Python 3 is installed. The script will create a virtual env
+in `python-venv` and install the required packages.
 
 2. Clone [firefox-l10n-source](https://github.com/mozilla-l10n/firefox-l10n-source)
 and switch to the `update` branch.

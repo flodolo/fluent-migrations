@@ -1,0 +1,4 @@
+compare-locales==9.0.4
+fluent.migrate==0.13.1
+mercurial==6.7.4
+python-hglib==2.6.2
