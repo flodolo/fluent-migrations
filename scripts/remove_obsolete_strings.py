@@ -45,9 +45,9 @@ def extractFileList(repository_path):
 
     file_list = []
     for root, dirs, files in os.walk(repository_path, followlinks=True):
-        # Ignore excluded folders
+        # Ignore excluded and hidden folders
         if root == repository_path:
-            dirs[:] = [d for d in dirs if d not in excluded_folders]
+            dirs[:] = [d for d in dirs if d[0] != "." and d not in excluded_folders]
 
         for filename in files:
             if os.path.splitext(filename)[1] in supported_formats:

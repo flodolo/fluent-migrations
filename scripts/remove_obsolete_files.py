@@ -35,10 +35,7 @@ def extractFileList(repository_path):
     specific paths.
     """
 
-    excluded_paths = (
-        "extensions/irc/",
-        "other-licenses/branding/sunbird/",
-    )
+    excluded_paths = ()
 
     supported_formats = [
         ".dtd",
