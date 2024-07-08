@@ -10,6 +10,21 @@ function interrupt_code()
 # Trap keyboard interrupt (control-c)
 trap interrupt_code SIGINT
 
+function setupVirtualEnv() {
+    # Create virtualenv folder if missing
+    if [ ! -d $root_path/python-venv ]
+    then
+        echo "Setting up new virtualenv..."
+        python3 -m venv $root_path/python-venv || exit 1
+    fi
+
+    # Install or update dependencies
+    source $root_path/python-venv/bin/activate || exit 1
+    pip install --upgrade --quiet pip
+    pip install -r $script_path/requirements.txt --upgrade --quiet --use-pep517
+    deactivate
+}
+
 script_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 root_path="$(dirname "${script_path}")"
 
@@ -117,6 +132,12 @@ if [ "${pull_repository}" = true ]
 then
     git -C ${l10n_path} pull
 fi
+
+# Set up virtualenv
+setupVirtualEnv
+
+# Activate virtualenv
+source $root_path/python-venv/bin/activate || exit 1
 
 for locale in ${locale_list[@]}
 do
