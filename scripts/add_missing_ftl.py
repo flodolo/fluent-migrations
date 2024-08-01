@@ -142,6 +142,7 @@ def main():
     if not args.noupdates:
         subprocess.run(["git", "-C", l10n_path, "pull"])
 
+    added_files = 0
     for locale in locales:
         # Ignore a locale if it's not in Pontoon or is below 60%
         if locale not in pontoon_stats and locale not in ["ja-JP-mac"]:
@@ -157,7 +158,6 @@ def main():
         # Create list of files
         locale_files = extractFileList(l10n_repo)
 
-        added_files = 0
         for file_name in source_files:
             if file_name not in locale_files:
                 full_file_name = os.path.join(l10n_repo, file_name)
@@ -179,21 +179,21 @@ def main():
                     )
                 added_files += 1
 
-        if added_files > 0:
-            out_log.append("{}: added {} files".format(locale, added_files))
-            files_total += added_files
-            if args.wetrun or args.push:
-                subprocess.run(["git", "-C", l10n_path, "add", locale])
-                subprocess.run(
-                    [
-                        "git",
-                        "-C",
-                        l10n_path,
-                        "commit",
-                        "-m",
-                        "Bug 1586984 - Add empty FTL files to repository to avoid English fallback",
-                    ]
-                )
+    if added_files > 0:
+        out_log.append("{}: added {} files".format(locale, added_files))
+        files_total += added_files
+        if args.wetrun or args.push:
+            subprocess.run(["git", "-C", l10n_path, "add", "."])
+            subprocess.run(
+                [
+                    "git",
+                    "-C",
+                    l10n_path,
+                    "commit",
+                    "-m",
+                    "Bug 1586984 - Add empty FTL files to repository to avoid English fallback",
+                ]
+            )
 
     if args.push:
         subprocess.run(["git", "-C", l10n_path, "push"])
