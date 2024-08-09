@@ -177,5 +177,5 @@ done
 # Push git repository
 if [ "${push_repository}" = true ]
 then
-    git -C ${l10n_path} push 2>/dev/null || git push --set-upstream origin ${branch_name}
+    git -C ${l10n_path} push 2>/dev/null || git -C ${l10n_path} push --set-upstream origin ${branch_name}
 fi
