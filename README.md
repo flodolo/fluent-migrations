@@ -53,10 +53,17 @@ For running migrations on all locales and push to repository, use:
 $ ./scripts/migration.sh wet-run push
 ```
 
+To use the current checked out branch instead of creating a new branch for wet-runs, use:
+
+```
+$ ./scripts/migration.sh wet-run current-branch
+```
+
 > [!CAUTION]
-> The script assumes your locale clone of `firefox-l10n` is already on the
+> The script assumes your local clone of `firefox-l10n` is already on the
 > correct branch, and that the value of `push.default` in Git’s configuration
-> allows to push without an explicit remote or branch.
+> allows to push without an explicit remote or branch if you have not created
+> a new branch.
 
 Run `./scripts/migration.sh help` for help on all available command line options.
 

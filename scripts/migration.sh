@@ -55,6 +55,10 @@ function echo_manual() {
     echo "To commit changes, add wet-run"
     echo "(e.g. 'migration.sh wet-run' to run all locales and commit migration changes)."
     echo "---"
+    echo "To use the current checked out branch of the push repository instead of"
+    echo "creating a new one for a wet-run, add current-branch"
+    echo "(e.g. 'migration.sh wet-run current-branch' to do a wet-run on the current branch)."
+    echo "---"
     echo "Multiple options can be combined. For example, for a prod migration:"
     echo "(e.g. 'migration.sh wet-run push' to run all locales, commit and push)."
 }
@@ -64,6 +68,7 @@ all_locales=true
 pull_repository=true
 push_repository=false
 wet_run=false
+create_branch=true
 
 # Check command parameters
 while [[ $# -gt 0 ]]
@@ -82,6 +87,9 @@ do
         wet-run)
             wet_run=true
         ;;
+        current-branch)
+            create_branch=false
+        ;;
         *)
             all_locales=false
             locale_code=$1
@@ -94,6 +102,7 @@ echo "Request summary:"
 echo "* Pull from repositories: ${pull_repository}"
 echo "* Push changes to repositories: ${push_repository}"
 echo "* Commit migration changes: ${wet_run}"
+echo "* Create new branch in push repository for wet-run: ${create_branch}"
 if [ "$all_locales" = true ]
 then
     echo "* Elaborate all locales: ${all_locales}"
@@ -149,6 +158,10 @@ do
     if [ "${wet_run}" = true ]
     then
         dry=""
+        if [ "${create_branch}" = true ]
+        then
+            git -C ${l10n_path} switch -C ${branch_name}
+        fi
     else
         dry="--dry-run"
     fi
@@ -164,5 +177,10 @@ done
 # Push git repository
 if [ "${push_repository}" = true ]
 then
-    git -C ${l10n_path} push
+    if [ "${create_branch}" = true ]
+    then
+        git -C ${l10n_path} push --set-upstream origin ${branch_name}
+    else
+        git -C ${l10n_path} push
+    fi
 fi
