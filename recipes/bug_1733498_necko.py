@@ -10,7 +10,7 @@ def migrate(ctx):
     """Bug 1733498 - Convert necko.properties to Fluent, part {index}."""
 
     source = "netwerk/necko.properties"
-    target = "netwerk/necko.ftl"
+    target = "netwerk/netwerk/necko.ftl"
     ctx.add_transforms(
         target,
         target,
