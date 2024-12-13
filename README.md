@@ -98,15 +98,6 @@ Once the bug is filed, move the corresponding fx folders (e.g. `fx113`) into the
 This repository includes other Python scripts that should be run within the
 virtual environment created by the main bash script (to activate it run `source
 python-venv/bin/activate`):
-* `add_missing_ftl.py`: adds missing `.ftl` files to locales. There is an
-  optional `--threshold` parameter to exclude locales that are below the
-  specified level of completion in Pontoon. This is used to work around the
-  current [Firefox fallback
-  system](https://bugzilla.mozilla.org/show_bug.cgi?id=1464156), where a missing
-  file in the bundle causes everything to fall back to English. To run this
-  command before the actual patch lands in `mozilla-central`, temporarily create
-  the file in the local quarantine clone (e.g. `touch path/to/file.ftl`), run
-  the script, and then remove the file.
 * `remove_obsolete_files.py`: removes obsolete files from locales. By default,
   `.ftl` files are ignored, given the fallback issue. To clean up `.ftl` files,
   you can add `.ftl` to the list `supported_formats`, then run
