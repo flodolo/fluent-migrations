@@ -17,20 +17,20 @@ def migrate(ctx):
             """
 about-reader-custom-colors-foreground2 =
     .label = {COPY_PATTERN(from_path, "about-reader-custom-colors-foreground")}
-    .title = Edit color
+    .title = {COPY_PATTERN(from_path, "about-reader-custom-colors-foreground.title")}
 about-reader-custom-colors-background2 =
     .label = {COPY_PATTERN(from_path, "about-reader-custom-colors-background")}
-    .title = Edit color
+    .title = {COPY_PATTERN(from_path, "about-reader-custom-colors-background.title")}
 
 about-reader-custom-colors-unvisited-links2 =
     .label = {COPY_PATTERN(from_path, "about-reader-custom-colors-unvisited-links")}
-    .title = Edit color
+    .title = {COPY_PATTERN(from_path, "about-reader-custom-colors-unvisited-links.title")}
 about-reader-custom-colors-visited-links2 =
     .label = {COPY_PATTERN(from_path, "about-reader-custom-colors-visited-links")}
-    .title = Edit color
+    .title = {COPY_PATTERN(from_path, "about-reader-custom-colors-visited-links.title")}
 about-reader-custom-colors-selection-highlight2 =
     .label = {COPY_PATTERN(from_path, "about-reader-custom-colors-selection-highlight")}
-    .title = Edit color
+    .title = {COPY_PATTERN(from_path, "about-reader-custom-colors-selection-highlight.title")}
 """,
             from_path=source,
         ),
