@@ -17,7 +17,7 @@ def migrate(ctx):
             """
 choose-folder-button =
     .label = {COPY_PATTERN(from_path, "download-choose-folder.label")}
-    .accesskey = {COPY_PATTERN(from_path, "download-choose-folder.accesskey ")}
+    .accesskey = {COPY_PATTERN(from_path, "download-choose-folder.accesskey")}
 """,
             from_path=source,
         ),
