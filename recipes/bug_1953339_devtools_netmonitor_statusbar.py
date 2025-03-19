@@ -21,6 +21,7 @@ class CUSTOM_PLURALS(PLURALS):
                 [FTL.Variant(FTL.Identifier("other"), pattern, default=True)],
             )
             pattern = FTL.Pattern([FTL.Placeable(selexp)])
+            el = pattern.elements[0]
         el.expression.variants[0:0] = [
             FTL.Variant(
                 FTL.NumberLiteral("0"),
