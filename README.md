@@ -28,7 +28,8 @@ After running the migration, recipes need to be moved in one of the `fx`
 subfolders. For example, if the migration landed in Firefox 77, recipes need to
 be moved to `fx77`. It’s then possible to use the utility script
 `cleanup_migrations.py` to list all recipes landed in a specific version of
-Firefox, and remove them from a local `mozilla-unified` clone.
+Firefox, and remove them from the local clone of
+[mozilla-firefox/firefox](https://github.com/mozilla-firefox/firefox).
 
 The `no_train` folder is used for recipes that never landed in
 `mozilla-central`.
@@ -77,17 +78,17 @@ For example, if you want to remove recipes for version 113, you can run this
 command:
 
 ```
-./scripts/cleanup_migrations.py 113 --bookmark
+./scripts/cleanup_migrations.py 113 --branch
 ```
 
 This will:
-* Create a bookmark (`cleanrecipes_fx113`) in the `mozilla-unified` local clone.
+* Create a branch (`cleanrecipes_fx113`) in the `mozilla-firefox/firefox` local clone.
 * Check the recipes that are stored inside the `fx113` folder, and remove them
-  from `mozilla-unified`.
+  from the repository.
 * Provide a link to file the bug with pre-populated text.
 
 If you want to remove other versions in the same bug, you can run the command
-without the `--bookmark` flag, and manually update the bug content with the text
+without the `--branch` flag, and manually update the bug content with the text
 printed in the console.
 
 Once the bug is filed, move the corresponding fx folders (e.g. `fx113`) into the

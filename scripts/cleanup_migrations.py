@@ -3,7 +3,7 @@
 """
 Pass a version number like 65 to:
 - Get the list of recipes from the fluent migrations landed in that version
-- Remove the recipes from the mozilla-unified repository
+- Remove the recipes from the firefox repository
 - Get a link to file a bug in Bugzilla
 """
 
@@ -21,19 +21,23 @@ def main():
     root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 
     # Read paths from config file
-    [mozilla_unified_path] = local_config.read_config(["mozilla_unified_path"])
+    [mozilla_firefox_path] = local_config.read_config(["mozilla_firefox_path"])
 
     parser = argparse.ArgumentParser()
     parser.add_argument("version_number", help="Version number, e.g. 65")
     parser.add_argument(
-        "--bookmark", help="Create bookmark in mozilla-unified", action="store_true"
+        "--branch",
+        help="Create a new branch in firefox repository",
+        action="store_true",
     )
     args = parser.parse_args()
 
     # Get the list of recipes
     version_number = args.version_number
     recipes_path = os.path.join(root_folder, "recipes", f"fx{version_number}")
-    hg_path = os.path.join(mozilla_unified_path, "python", "l10n", "fluent_migrations")
+    repo_path = os.path.join(
+        mozilla_firefox_path, "python", "l10n", "fluent_migrations"
+    )
 
     for root, dirs, files in os.walk(recipes_path, followlinks=True):
         # Exclude hidden folders and files
@@ -43,9 +47,9 @@ def main():
         output = []
         output.append(f"Affected bugs ({version_number}):")
         for recipe in recipes:
-            # Remove the files from mozilla-unified
+            # Remove the files from repository
             try:
-                recipe_path = os.path.join(hg_path, recipe)
+                recipe_path = os.path.join(repo_path, recipe)
                 os.remove(recipe_path)
                 output.append("- Bug {}".format(recipe.split("_")[1]))
             except FileNotFoundError:
@@ -53,18 +57,18 @@ def main():
 
         print("\n".join(output))
 
-        if args.bookmark:
-            # Create hg bookmark and addremove files
+        if args.branch:
+            # Create branch
             subprocess.run(
                 [
-                    "hg",
-                    "-R",
-                    mozilla_unified_path,
-                    "bookmark",
+                    "git",
+                    "-C",
+                    mozilla_firefox_path,
+                    "switch",
+                    "-C",
                     f"cleanrecipes_fx{version_number}",
                 ]
             )
-        subprocess.run(["hg", "-R", mozilla_unified_path, "addremove"])
 
         # Print link to bug template
         encoded_output = [line.replace(" ", "%20") for line in output]
