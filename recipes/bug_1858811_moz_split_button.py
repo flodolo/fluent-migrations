@@ -17,7 +17,7 @@ def migrate(ctx):
             """
 moz-button-more-options =
     .title = {COPY_PATTERN(from_path, "contextual-manager-menu-more-options-button.title")}
-    .aria-label = {COPY_PATTERN(from_path, "contextual-manager-more-options-popup.aria-label ")}
+    .aria-label = {COPY_PATTERN(from_path, "contextual-manager-more-options-popup.aria-label")}
 """,
             from_path=source,
         ),
