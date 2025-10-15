@@ -41,12 +41,12 @@ jobs:
           title: "Sync missing Fluent migrations"
           commit-message: "Sync missing Fluent migrations"
           body: |
-            This automated PR adds missing `recipes from the upstream Firefox repository.
+            This automated PR adds missing recipes from the upstream Firefox repository.
           add-paths: |
             recipes/**
           token: ${{ secrets.REPO_TOKEN }}
 
-      - name: Comment on firefox-l10n-source PRs about pending migrations
+      - name: Comment on firefox-l10n-source open PR about pending migrations
         if: steps.cpr.outputs.pull-request-operation != 'none'
         run: |
           echo "PR URL: ${{ steps.cpr.outputs.pull-request-url }}"

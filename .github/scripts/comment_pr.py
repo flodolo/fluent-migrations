@@ -49,7 +49,7 @@ def comment_if_needed(session: requests.Session, pr_number: str, link: str) -> N
 
 def main():
     ap = argparse.ArgumentParser(
-        description="Comment on firefox-l10n-source PRs if pending migrations exist."
+        description="Comment on firefox-l10n-source open PR if pending migrations exist."
     )
     ap.add_argument(
         "--url",
