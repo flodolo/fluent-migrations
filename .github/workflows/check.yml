@@ -30,7 +30,7 @@ jobs:
 
       - name: Run sync script (download missing recipes)
         run: |
-          python scripts/sync_recipes.py
+          python .github/scripts/sync_recipes.py
 
       - name: Create or update PR
         id: cpr
