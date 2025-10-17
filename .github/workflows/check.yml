@@ -1,0 +1,54 @@
+name: Sync Fluent recipes
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "10 6,12,18 * * *"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r scripts/requirements.txt
+
+      - name: Run sync script (download missing recipes)
+        run: |
+          python scripts/sync_recipes.py
+
+      - name: Create or update PR
+        id: cpr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: recipes-sync
+          delete-branch: false
+          title: "Sync missing Fluent migrations"
+          commit-message: "Sync missing Fluent migrations"
+          body: |
+            This automated PR adds missing recipes from the upstream Firefox repository.
+          add-paths: |
+            recipes/**
+          token: ${{ secrets.REPO_TOKEN }}
+
+      - name: Comment on firefox-l10n-source open PR about pending migrations
+        if: steps.cpr.outputs.pull-request-operation != 'none'
+        run: |
+          echo "PR URL: ${{ steps.cpr.outputs.pull-request-url }}"
+          python .github/scripts/comment_pending_migrations.py \
+            --pr-url "${{ steps.cpr.outputs.pull-request-url }}"
