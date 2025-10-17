@@ -50,5 +50,5 @@ jobs:
         if: steps.cpr.outputs.pull-request-operation != 'none'
         run: |
           echo "PR URL: ${{ steps.cpr.outputs.pull-request-url }}"
-          python .github/scripts/comment_pending_migrations.py \
-            --pr-url "${{ steps.cpr.outputs.pull-request-url }}"
+          python .github/scripts/comment_pr.py \
+            --url "${{ steps.cpr.outputs.pull-request-url }}"

@@ -9,7 +9,7 @@ import requests
 
 
 def get_token() -> str:
-    return os.environ.get("REPO_TOKEN", "")
+    return os.environ.get("REPO_TOKEN", "").strip()
 
 
 def check_recipes_dir() -> Path:

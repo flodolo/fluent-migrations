@@ -9,7 +9,7 @@ import requests
 
 
 def get_token() -> str | None:
-    return os.environ.get("REPO_TOKEN", None)
+    return os.environ.get("REPO_TOKEN", "").strip()
 
 
 def gh_get(session: requests.Session, url: str, **params):
