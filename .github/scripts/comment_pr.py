@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import argparse
 import os
 import sys
 
@@ -35,7 +34,7 @@ def find_open_target_pr(session: requests.Session) -> str:
     return open_prs[0].get("number")
 
 
-def comment_if_needed(session: requests.Session, pr_number: str, link: str) -> None:
+def comment_if_needed(session: requests.Session, pr_number: str) -> None:
     comments_url = f"https://api.github.com/repos/mozilla-l10n/firefox-l10n-source/issues/{pr_number}/comments"
     comment_marker = "[fluent-recipes-bot]"
     existing = gh_get(session, comments_url, per_page=100)
@@ -43,21 +42,11 @@ def comment_if_needed(session: requests.Session, pr_number: str, link: str) -> N
         if comment_marker in (c.get("body") or ""):
             return
 
-    body = f"{comment_marker} There are pending migrations in {link}"
+    body = f"{comment_marker} There are pending migrations in https://github.com/flodolo/fluent-migrations"
     gh_post(session, comments_url, {"body": body})
 
 
 def main():
-    ap = argparse.ArgumentParser(
-        description="Comment on firefox-l10n-source open PR if pending migrations exist."
-    )
-    ap.add_argument(
-        "--url",
-        required=True,
-        help="URL to the open PR (for comment body)",
-    )
-    args = ap.parse_args()
-
     token = get_token()
     if not token:
         sys.exit("ERROR: No token found. Set REPO_TOKEN.")
@@ -71,7 +60,7 @@ def main():
         s.headers.update(headers)
         pr_number = find_open_target_pr(s)
         if pr_number:
-            comment_if_needed(s, pr_number, args.url)
+            comment_if_needed(s, pr_number)
         else:
             print("No open PRs with title 'Update messages'. Nothing to do.")
 
