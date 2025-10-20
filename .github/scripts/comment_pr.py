@@ -62,7 +62,7 @@ def main():
         if pr_number:
             comment_if_needed(s, pr_number)
         else:
-            print("No open PRs with title 'Update messages'. Nothing to do.")
+            sys.exit("ERROR: No open PRs with title 'Update messages'.")
 
 
 if __name__ == "__main__":
