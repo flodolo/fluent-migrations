@@ -148,23 +148,23 @@ setupVirtualEnv
 # Activate virtualenv
 source $root_path/python-venv/bin/activate || exit 1
 
+if [ "${wet_run}" = true ]
+then
+    dry=""
+    if [ "${create_branch}" = true ]
+    then
+        git -C ${l10n_path} switch -C ${branch_name}
+    fi
+else
+    dry="--dry-run"
+fi
+
 for locale in ${locale_list[@]}
 do
     # Remove trailing slash from $locale and $l10n_path
     locale=${locale%/}
     l10n_path=${l10n_path%/}
     echo "Locale: ${locale}"
-
-    if [ "${wet_run}" = true ]
-    then
-        dry=""
-        if [ "${create_branch}" = true ]
-        then
-            git -C ${l10n_path} switch -C ${branch_name}
-        fi
-    else
-        dry="--dry-run"
-    fi
 
     # Run migration
     migrate-l10n \
